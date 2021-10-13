@@ -329,7 +329,6 @@ export default {
   },
   methods: {
     onUploadBtnClick() {
-      console.log(this.$refs)
       this.$refs.uploader.click()
     },
     attachmentFile(id) {

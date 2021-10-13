@@ -219,7 +219,6 @@ export default {
   },
   methods : {
     attachmentFile() {
-      console.log('attachment file')
       document.getElementById("attachment-file").click()
     },
     setdepartment(departmentName) {

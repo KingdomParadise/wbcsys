@@ -15,6 +15,14 @@
                   <b-row class="my-2">
                     <b-col cols="12" md="5" class="d-flex align-items-center justify-content-center mb-2 mb-md-0">
                       <div class="d-flex align-items-center justify-content-center">
+                        <b-img class="mt-3 mb-2"
+                          src="../../assets/app-assets/images/portrait/small/avatar-s-2.jpg"
+                          rounded
+                          fluid
+                          width="110px"
+                          height="110px"
+                          alt="profile photo"
+                        />
                         <img class="img-fluid rounded mt-3 mb-2" src="../../assets/app-assets/images/portrait/small/avatar-s-2.jpg" height="110" width="110" alt="User avatar" />
                       </div>
                     </b-col>
@@ -69,14 +77,14 @@
                   </b-col>
                 </b-row>
                 <b-row class="my-2">
-                    <p class="card-text"><span class="text-primary">チームメンバー</span></p>
+                    <p class="card-text w-100"><span class="text-primary ml-1">チームメンバー</span></p>
                     <div class="col-12 col-md-6">
                       <a class="d-flex" href="#">					
-                        <div class="list-item d-flex align-items-start">
+                        <div class="list-item d-flex align-items-start ml-1">
                           <div class="me-1">
                             <div class="avatar"><img src="../../assets/app-assets/images/portrait/small/avatar-s-3.jpg" alt="avatar" width="32" height="32"></div>
                           </div>
-                          <div class="me-1">
+                          <div class="me-1 ml-1">
                             <div class="avatar"><img src="../../assets/app-assets/images/portrait/small/avatar-s-15.jpg" alt="avatar" width="32" height="32"></div>
                           </div>
                         </div>
@@ -89,14 +97,14 @@
               <!-- Plan Card -->
               <div class="card border-primary">
                 <div class="card-body d-flex justify-content-around">
-                  <div class="d-flex my-2 pt-75 flex-direction ">
-                    <div class="d-flex align-items-start me-2 flex5 mg-b1">
+                  <div class="d-flex my-2 pt-75" style="flex-direction:column">
+                    <div class="d-flex align-items-start me-2 flex5 mg-b1 mb-2">
                       <span class="badge bg-light-primary p-75 rounded">
                         <feather-icon
                           icon="CheckIcon"
                           class="font-medium-2"/>
                       </span>
-                      <div class="ms-75">
+                      <div class="ms-75 ml-1">
                         <h4 class="mb-0">10位</h4>
                         <small>月間ランキング</small>
                       </div>
@@ -107,21 +115,21 @@
                           icon="CheckIcon"
                           class="font-medium-2"/>
                       </span>
-                      <div class="ms-75">
+                      <div class="ms-75 ml-1">
                           <h4 class="mb-0">1.01k</h4>
                           <small> 投 稿 数 </small>
                       </div>
                     </div>
                   </div>
-                  <div class="d-flex my-2 pt-75 flex-direction">
-                    <div class="d-flex align-items-start flex4 mg-b1">
+                  <div class="d-flex my-2 pt-75" style="flex-direction:column">
+                    <div class="d-flex align-items-start mb-2">
                       <span class="badge bg-light-primary p-75 rounded">
                         <feather-icon
                           icon="BriefcaseIcon"
                           class="font-medium-2"
                         />
                       </span>
-                      <div class="ms-75">
+                      <div class="ms-75 ml-1">
                         <h4 class="mb-0">568</h4>
                         <small>月間スコア</small>
                       </div>
@@ -133,7 +141,7 @@
                           class="font-medium-2"
                         />
                       </span>
-                      <div class="ms-75">
+                      <div class="ms-75 ml-1">
                           <h4 class="mb-0">568</h4>
                           <small> 回　答　数 </small>
                       </div>
@@ -207,7 +215,7 @@
                       <div class="timeline-event">
                         <div class="d-flex justify-content-between flex-sm-row flex-column mb-sm-0 mb-1">
                           <h6>作業を完了しました。</h6>
-                          <span class="timeline-event-time me-1">12 min ago</span>
+                          <span class="timeline-event-time me-1">12 分前</span>
                         </div>
                         <p>User login at 2:12pm</p>
                       </div>
@@ -217,16 +225,16 @@
                       <div class="timeline-event">
                         <div class="d-flex justify-content-between flex-sm-row flex-column mb-sm-0 mb-1">
                           <h6>〇〇投稿へ回答が来ました。</h6>
-                          <span class="timeline-event-time me-1">45 min ago</span>
+                          <span class="timeline-event-time me-1">45 分前</span>
                         </div>
                         <p>〇〇でどうでしょうか？ @10:15am</p>
                         <div class="d-flex flex-row align-items-center mb-50">
-                          <div class="avatar me-50">
+                          <div class="avatar me-50 mr-1">
                             <img src="../../assets/app-assets/images/portrait/small/avatar-s-7.jpg" alt="Avatar" width="38" height="38" />
                           </div>
                           <div class="user-info">
-                            <h6 class="mb-0">Leona Watkins (Client)</h6>
-                            <p class="mb-0">CEO of pixinvent</p>
+                            <h6 class="mb-0">はなこ(お客様)</h6>
+                            <p class="mb-0">Web デザイン者</p>
                           </div>
                         </div>
                       </div>
@@ -245,13 +253,13 @@
                       <span class="timeline-point timeline-point-danger timeline-point-indicator"></span>
                       <div class="timeline-event">
                         <div class="d-flex justify-content-between flex-sm-row flex-column mb-sm-0 mb-1">
-                          <h6>Create Invoices for client</h6>
-                          <span class="timeline-event-time me-1">12 min ago</span>
+                          <h6>新しい請求書を作成し、やみに送信します</h6>
+                          <span class="timeline-event-time me-1">12 分前</span>
                         </div>
-                        <p class="mb-0">Create new Invoices and send to Leona Watkins</p>
+                        <p class="mb-0">ホームページ作成</p>
                         <div class="d-flex flex-row align-items-center mt-50">
                           <img class="me-1" src="../../assets/app-assets/images/icons/pdf.png" alt="data.json" height="25" />
-                          <h6 class="mb-0">Invoices.pdf</h6>
+                          <h6 class="mb-0 ml-1">ご案内.pdf</h6>
                         </div>
                       </div>
                     </li>
@@ -316,36 +324,5 @@ export default {
 </script>
 <style lang="scss">
   @import '@core/scss/vue/libs/chart-apex.scss';
-  @import '../../assets/app-assets/vendors/css/vendors.min.css';
-  @import '../../assets/app-assets/vendors/css/forms/select/select2.min.css';
-  @import '../../assets/app-assets/vendors/css/animate/animate.min.css';
-  @import '../../assets/app-assets/vendors/css/extensions/sweetalert2.min.css';
-  @import '../../assets/app-assets/css/bootstrap.css';
-  @import '../../assets/app-assets/css/bootstrap-extended.css';
-  @import '../../assets/app-assets/css/colors.css';
-  @import '../../assets/app-assets/css/components.css';
-  @import '../../assets/app-assets/css/themes/dark-layout.css';
-  @import '../../assets/app-assets/css/themes/bordered-layout.css';
-  @import '../../assets/app-assets/css/themes/semi-dark-layout.css';
-  @import '../../assets/app-assets/css/core/menu/menu-types/vertical-menu.css';
-  @import '../../assets/app-assets/css/plugins/extensions/ext-component-sweet-alerts.css';
-  @import '../../assets/app-assets/css/plugins/forms/form-validation.css';
-  .felx4{
-    flex: 4;
-  }
-  .flex5{
-    flex: 5;
-  }
-  .d-flex{
-    display: flex;
-  } 
-  .justify-content-around{
-    justify-content: space-around;
-  }
-  .flex-direction{
-    flex-direction: column;
-  }
-  .mg-b1{
-    margin-bottom: 1.5rem;
-  }
+
 </style>

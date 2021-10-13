@@ -311,14 +311,12 @@ import vSelect from 'vue-select'
 import store from '@/store'
 import { ref, onUnmounted } from '@vue/composition-api'
 import { avatarText } from '@core/utils/filter'
-import UsersListFilters from './users-list/UsersListFilters.vue'
 import useUsersList from './users-list/useUsersList'
 import userStoreModule from './users-list/userStoreModule'
 import UserListAddNew from './users-list/UserListAddNew.vue'
 
 export default {
   components: {
-    UsersListFilters,
     UserListAddNew,
     BCard,
     BRow,

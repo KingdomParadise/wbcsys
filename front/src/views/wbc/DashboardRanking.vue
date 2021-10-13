@@ -67,14 +67,14 @@
                 </div>
                 </div>
                 <div class="row my-2">
-                  <p class="card-text"><span class="text-primary">チームメンバー</span></p>
+                  <p class="card-text" style="width:100%"><span class="text-primary">チームメンバー</span></p>
                   <div class="col-12 col-md-6">
                     <a class="d-flex" href="#">					
                       <div class="list-item d-flex align-items-start">
                         <div class="me-1">
                           <div class="avatar"><img src="../../assets/app-assets/images/portrait/small/avatar-s-3.jpg" alt="avatar" width="32" height="32"></div>
                         </div>
-                        <div class="me-1">
+                        <div class="me-1 ml-1">
                           <div class="avatar"><img src="../../assets/app-assets/images/portrait/small/avatar-s-15.jpg" alt="avatar" width="32" height="32"></div>
                         </div>
                       </div>
@@ -87,40 +87,39 @@
               <!-- Plan Card -->
               <div class="card border-primary">
                 <div class="card-body d-flex justify-content-around">
-                  <div class="d-flex my-2 pt-75 flex-direction ">
-                    <div class="d-flex align-items-start me-2 flex5 mg-b1">
-                      <span class="badge bg-light-primary p-75 rounded">
+                  <div class="d-flex my-2 pt-75 " style="flex-direction:column">
+                    <div class="d-flex align-items-start me-2 ">
+                      <span class="badge bg-light-primary p-75 rounded mb-2">
                         <feather-icon
                           icon="CheckIcon"
                           class="font-medium-2"/>
                       </span>
-                      <div class="ms-75">
+                      <div class="ms-75 ml-1">
                         <h4 class="mb-0">10位</h4>
                         <small>月間ランキング</small>
                       </div>
                     </div>
-                    <div class="d-flex align-items-start me-2 flex5">
+                    <div class="d-flex align-items-start me-2 ">
                       <span class="badge bg-light-primary p-75 rounded">
                         <feather-icon
                           icon="CheckIcon"
                           class="font-medium-2"/>
                       </span>
-                      <div class="ms-75">
-                        <h4 class="mb-0">1.01k</h4>
-                        <small> 投 稿 数 </small>
+                      <div class="ms-75 ml-1">
+                          <h4 class="mb-0">1.01k</h4>
+                          <small> 投 稿 数 </small>
                       </div>
                     </div>
-                    
                   </div>
-                  <div class="d-flex my-2 pt-75 flex-direction">
-                    <div class="d-flex align-items-start flex4 mg-b1">
-                      <span class="badge bg-light-primary p-75 rounded">
+                  <div class="d-flex my-2 pt-75 " style="flex-direction:column">
+                    <div class="d-flex align-items-start ">
+                      <span class="badge bg-light-primary p-75 rounded mb-2">
                         <feather-icon
                           icon="BriefcaseIcon"
                           class="font-medium-2"
                         />
                       </span>
-                      <div class="ms-75">
+                      <div class="ms-75 ml-1">
                         <h4 class="mb-0">568</h4>
                         <small>月間スコア</small>
                       </div>
@@ -132,7 +131,7 @@
                           class="font-medium-2"
                         />
                       </span>
-                      <div class="ms-75">
+                      <div class="ms-75 ml-1">
                           <h4 class="mb-0">568</h4>
                           <small> 回　答　数 </small>
                       </div>
@@ -292,36 +291,4 @@ export default {
 
 <style lang="scss">
   @import '@core/scss/vue/libs/chart-apex.scss';
-  @import '../../assets/app-assets/vendors/css/vendors.min.css';
-  @import '../../assets/app-assets/vendors/css/forms/select/select2.min.css';
-  @import '../../assets/app-assets/vendors/css/animate/animate.min.css';
-  @import '../../assets/app-assets/vendors/css/extensions/sweetalert2.min.css';
-  @import '../../assets/app-assets/css/bootstrap.css';
-  @import '../../assets/app-assets/css/bootstrap-extended.css';
-  @import '../../assets/app-assets/css/colors.css';
-  @import '../../assets/app-assets/css/components.css';
-  @import '../../assets/app-assets/css/themes/dark-layout.css';
-  @import '../../assets/app-assets/css/themes/bordered-layout.css';
-  @import '../../assets/app-assets/css/themes/semi-dark-layout.css';
-  @import '../../assets/app-assets/css/core/menu/menu-types/vertical-menu.css';
-  @import '../../assets/app-assets/css/plugins/extensions/ext-component-sweet-alerts.css';
-  @import '../../assets/app-assets/css/plugins/forms/form-validation.css';
-  .felx4{
-    flex: 4;
-  }
-  .flex5{
-    flex: 5;
-  }
-  .d-flex{
-    display: flex;
-  } 
-  .justify-content-around{
-    justify-content: space-around;
-  }
-  .flex-direction{
-    flex-direction: column;
-  }
-  .mg-b1{
-    margin-bottom: 1.5rem;
-  }
 </style>

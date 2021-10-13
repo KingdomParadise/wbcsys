@@ -3,9 +3,9 @@
     <b-card-header>
       <div>
         <b-card-title class="mb-1">
-          Statistics
+          統計
         </b-card-title>
-        <b-card-sub-title>Commercial networks and enterprises</b-card-sub-title>
+        <b-card-sub-title>商業ネットワークと企業</b-card-sub-title>
       </div>
     </b-card-header>
 

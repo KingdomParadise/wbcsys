@@ -55,8 +55,8 @@
                     variant="transparent"
                     badge
                     badge-variant="success"
-                    @click.native="$emit('show-user-profile')"
                   />
+                    <!-- @click.native="$emit('show-user-profile')" -->
                 </div>
                 <!-- Search -->
                 <b-input-group class="input-group-merge ml-1 w-100 round">
@@ -68,7 +68,7 @@
                   </b-input-group-prepend>
                   <b-form-input
                     v-model="searchQuery"
-                    placeholder="Search..."
+                    placeholder="検索..."
                   />
                 </b-input-group>
               </div>

@@ -7,7 +7,7 @@
             <b-row>
               <b-col offset-md="8">
                 <b-input-group class="input-group-merge">
-                  <b-form-input placeholder="Search Product" />
+                  <b-form-input placeholder="検索" />
                   <b-input-group-append is-text>
                     <feather-icon icon="SearchIcon" />
                   </b-input-group-append>

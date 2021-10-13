@@ -15,7 +15,6 @@
       @click="updateVisible(!visible)"
     >
       <slot name="header">
-        <!-- <span class="lead collapse-title">{{ title }}</span> -->
         <div class="lead collapse-title divider divider-dashed">
           <div class="divider-text">{{title}}</div>
         </div>

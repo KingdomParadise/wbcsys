@@ -74,7 +74,7 @@
                   <b-form-group>
                     <b-form-input 
                       id="add_board_title"
-                      placeholder="Add Board Title"
+                      placeholder="追加"
                     />
                   </b-form-group>
                   <b-form-group>
@@ -133,7 +133,7 @@
                   <b-form-group>
                     <b-form-input 
                       id="add_new_board"
-                      placeholder="Add New Board"
+                      placeholder="追加"
                     />
                   </b-form-group>
                   <b-form-group>

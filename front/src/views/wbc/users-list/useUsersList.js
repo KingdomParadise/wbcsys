@@ -19,7 +19,7 @@ export default function useUsersList() {
     { key: '社員名', sortable: true },
     { key: '部署', sortable: true },
     { key: '役職', sortable: true },    
-    { key: 'actions' },
+    { key: 'アクション' },
   ]
   const perPage = ref(10)
   const totalUsers = ref(0)

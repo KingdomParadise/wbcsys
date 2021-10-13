@@ -1,6 +1,6 @@
 <template>
   <section id="wbc-register">
-    <app-navbar-vertical-layout :toggle-vertical-menu-active="toggleVerticalMenuActive" />
+  <app-navbar-vertical-layout :toggle-vertical-menu-active="toggleVerticalMenuActive" />
     <b-row>
       <b-col cols="12">
         <b-card no-body>

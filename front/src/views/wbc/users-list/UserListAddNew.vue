@@ -17,7 +17,6 @@
         <h5 class="mb-0">
           Add New User
         </h5>
-
         <feather-icon
           class="ml-1 cursor-pointer"
           icon="XIcon"
@@ -331,11 +330,7 @@ export default {
     }
 
     const onSubmit = () => {
-      store.dispatch('app-user/addUser', userData.value)
-        .then(() => {
-          emit('refetch-data')
-          emit('update:is-add-new-user-sidebar-active', false)
-        })
+      
     }
 
     const {

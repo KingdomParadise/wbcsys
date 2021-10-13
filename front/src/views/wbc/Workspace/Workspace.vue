@@ -25,7 +25,7 @@
           class="sidebar-toggle start-chat-text"
           @click="startConversation"
         >
-          Start Conversation
+          会話を開始
         </h4>
       </div>
 
@@ -95,14 +95,6 @@
                   </b-avatar-group>
                 </div>
               </div>
-              <!-- <b-avatar
-                size="36"
-                :src="activeChat.contact.avatar"
-                class="mr-1 cursor-pointer badge-minimal"
-                badge
-                :badge-variant="resolveAvatarBadgeVariant(activeChat.contact.status)"
-                @click.native="shallShowActiveChatContactSidebar=true"
-              /> -->
             </div>
           </header>
         </div>
@@ -127,7 +119,7 @@
           <b-input-group class="input-group-merge mr-1">
             <b-form-input
               v-model="chatInputMessage"
-              placeholder="Enter your message"
+              placeholder="メッセージを入力"
             />
             <b-input-group-append is-text>
               <feather-icon
@@ -141,26 +133,10 @@
           <b-button
             variant="primary"
             type="submit"
+            style="width: 80px"
           >
-            Send
+            送 信
           </b-button>
-          <!-- <b-input-group class="input-group-merge form-send-message mr-1">
-            <b-form-input
-              v-model="chatInputMessage"
-              placeholder="Enter your message"
-            />
-            <b-input-group-append>
-              <b-button class="attachment-file">
-                <feather-icon icon="SearchIcon"></feather-icon>
-              </b-button>
-            </b-input-group-append>
-          </b-input-group>
-          <b-button
-            variant="primary"
-            type="submit"
-          >
-            Send
-          </b-button> -->
         </b-form>
       </div>
     </section>

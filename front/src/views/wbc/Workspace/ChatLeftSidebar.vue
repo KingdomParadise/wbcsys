@@ -82,7 +82,7 @@
 
               <!-- Chats Title -->
               <h4 class="chat-list-title">
-                Department Names
+                部署名
               </h4>
 
               <ul class="chat-users-list contact-list media-list">
@@ -98,7 +98,7 @@
 
               <!-- Contacts Title -->
               <h4 class="chat-list-title">
-                Department Members
+                部署会員
               </h4>
 
               <!-- Contacts -->

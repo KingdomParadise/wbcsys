@@ -18,15 +18,8 @@
 
     <!-- Left Col -->
     <div class="bookmark-wrapper align-items-center flex-grow-1 d-none d-lg-flex">
-
-      <!-- Bookmarks Container -->
-      {{url}}
-      <!-- <bookmarks /> -->
-      <template v-if="url === '/'">
-
-      </template>
+      <navbar-for-url />
     </div>
-
     <b-navbar-nav class="nav align-items-center ml-auto">
       <!-- <locale /> -->
       <dark-Toggler class="d-none d-lg-block" />
@@ -56,6 +49,8 @@ import DarkToggler from './components/DarkToggler.vue'
 import CartDropdown from './components/CartDropdown.vue'
 import NotificationDropdown from './components/NotificationDropdown.vue'
 import UserDropdown from './components/UserDropdown.vue'
+//custome
+import NavbarForUrl from './components/NavbarForUrl.vue'
 
 export default {
   components: {
@@ -70,10 +65,10 @@ export default {
     CartDropdown,
     NotificationDropdown,
     UserDropdown,
+    NavbarForUrl
   },
   data() {
     return {
-      url: this.$router.path
     }
   },
   update() {

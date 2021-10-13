@@ -154,6 +154,7 @@
                             label-cols-md="3"
                         >
                             <flat-pickr
+                                v-model="fp_range"
                                 name="fp_range"
                                 :config="config"
                                 class="form-control"
@@ -252,6 +253,7 @@ export default {
   },
   data() {
     return {
+      fp_range: null,
       options: [
         "チームのタスク",
         "OOOOOOOOOO",

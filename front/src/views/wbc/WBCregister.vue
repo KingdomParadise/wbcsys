@@ -1,5 +1,6 @@
 <template>
   <section id="wbc-register">
+    <app-navbar-vertical-layout :toggle-vertical-menu-active="toggleVerticalMenuActive" />
     <b-row>
       <b-col cols="12">
         <b-card no-body>
@@ -192,6 +193,7 @@
 
 <script>
 import { BRow, BCol, BCard, BCardHeader, BCardBody, BCardTitle, BButton, BFormInput, BFormGroup, BFormSelect, BForm, BFormTextarea } from 'bootstrap-vue'
+import AppNavbarVerticalLayout from '@core/layouts/components/app-navbar/AppNavbarVerticalLayout.vue'
 
 export default {
   components: {
@@ -206,7 +208,8 @@ export default {
     BFormGroup,
     BFormSelect,
     BFormTextarea,
-    BForm
+    BForm,
+    AppNavbarVerticalLayout
   },
   data() {
     return {

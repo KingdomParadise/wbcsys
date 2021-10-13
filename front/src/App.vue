@@ -104,3 +104,16 @@ export default {
   },
 }
 </script>
+<style>
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  border-radius: 2px;
+  background: rgba(228, 211, 211, 0.548);
+}
+</style>

@@ -195,8 +195,10 @@ import {
   ref, onUnmounted, nextTick,
 } from '@vue/composition-api'
 import {
-  BAvatar, BDropdown, BDropdownItem, BForm, BInputGroup, BFormInput, BButton, BAvatarGroup, BInputGroupAppend, BFormGroup,BFormFile
+  BAvatar, BDropdown, BDropdownItem, BForm, BInputGroup, BFormInput, BButton, BAvatarGroup, BInputGroupAppend, BFormGroup,BFormFile, VBTooltip 
 } from 'bootstrap-vue'
+
+import Ripple from 'vue-ripple-directive'
 import VuePerfectScrollbar from 'vue-perfect-scrollbar'
 // import { formatDate } from '@core/utils/filter'
 import { $themeBreakpoints } from '@themeConfig'
@@ -229,6 +231,10 @@ export default {
     ChatLeftSidebar,
     ChatActiveChatContentDetailsSidedbar,
     ChatLog,
+  },
+  directives: {
+    'b-tooltip': VBTooltip, 
+    Ripple
   },
   data() {
     return {

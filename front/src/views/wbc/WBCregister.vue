@@ -192,6 +192,7 @@
 
 <script>
 import { BRow, BCol, BCard, BCardHeader, BCardBody, BCardTitle, BButton, BFormInput, BFormGroup, BFormSelect, BForm, BFormTextarea } from 'bootstrap-vue'
+import Ripple from 'vue-ripple-directive'
 
 export default {
   components: {
@@ -207,6 +208,9 @@ export default {
     BFormSelect,
     BFormTextarea,
     BForm
+  },
+  directives: {
+    Ripple
   },
   data() {
     return {

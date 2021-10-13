@@ -237,6 +237,7 @@
                   </b-col>
                   <b-col cols="9">
                     <flat-pickr
+                      v-model="fp_range"
                       name="fp_range"
                       :config="config"
                       class="form-control"
@@ -329,7 +330,7 @@
                 <b-avatar
                   :src="require('@/assets/images/portrait/small/avatar-s-5.jpg')"
                 />
-                <div class="ml-50">
+                <div class="ml-50 w-100">
                   <h6 class="mb-0">コメント　太郎　2021年09月24日　（金）</h6>
                   <div>
                     <table class="test">
@@ -349,7 +350,7 @@
                 <b-avatar
                   :src="require('@/assets/images/portrait/small/avatar-s-5.jpg')"
                 />
-                <div class="ml-50">
+                <div class="ml-50 w-100">
                   <h6 class="mb-0">コメント　太郎　2021年09月24日　（金）</h6>
                   <div>
                     <table class="test">
@@ -411,6 +412,7 @@ components: {
     return {
       projectname: "wbc",
       taskname: "wbc",
+      fp_range: null,
       options: [
           "チームのタスク",
           "OOOOOOOOOO",
@@ -545,7 +547,7 @@ td {
 .delete-task{
 	background-color: orange;
 }
-.create_task_modal .modal-body button {
+#create_task_modal .modal-body .btn {
   padding: 0.786rem 0.7rem !important;
 }
 

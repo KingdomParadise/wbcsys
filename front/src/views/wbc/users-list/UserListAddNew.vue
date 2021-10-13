@@ -17,7 +17,6 @@
         <h5 class="mb-0">
           Add New User
         </h5>
-
         <feather-icon
           class="ml-1 cursor-pointer"
           icon="XIcon"

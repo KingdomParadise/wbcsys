@@ -1,108 +1,106 @@
 <template>
   <section id="wbc-user-list">
-                    <section class="app-user-list">
-                    <div class="row">
-                      <div class="col-lg-2 col-sm-4">
-                        <div class="card">
-                          <div class="card-body d-flex align-items-center justify-content-between">
-                            <div>
-                              <h3 class="fw-bolder mb-75">55</h3>
-                              <span>社員数</span>
-                            </div>
-                            <div class="avatar bg-light-primary p-50">
-                              <span class="avatar-content">
-                                <feather-icon icon="UserIcon" class="font-medium-4"/>
-                              </span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                        <div class="col-lg-2 col-sm-4">
-                          <div class="card">
-                            <div class="card-body d-flex align-items-center justify-content-between">
-                              <div>
-                                <h3 class="fw-bolder mb-75">5</h3>
-                                <span>企画開発</span>
-                              </div>
-                              <div class="avatar bg-light-danger p-50">
-                                <span class="avatar-content">
-                                  <feather-icon icon="UserPlusIcon" class="font-medium-4"/>
-                                </span>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-lg-2 col-sm-4">
-                          <div class="card">
-                            <div class="card-body d-flex align-items-center justify-content-between">
-                              <div>
-                                <h3 class="fw-bolder mb-75">6</h3>
-                                <span>営業部</span>
-                              </div>
-                              <div class="avatar bg-light-success p-50">
-                                <span class="avatar-content">
-                                    <feather-icon icon="UserCheckIcon" class="font-medium-4"/>
-                                </span>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-lg-2 col-sm-4">
-                          <div class="card">
-                            <div class="card-body d-flex align-items-center justify-content-between">
-                              <div>
-                                <h3 class="fw-bolder mb-75">6</h3>
-                                <span>管理部</span>
-                              </div>
-                              <div class="avatar bg-light-warning p-50">
-                                <span class="avatar-content">
-                                    <feather-icon icon="UserXIcon" class="font-medium-4"/>
-                                </span>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-lg-2 col-sm-4">
-                          <div class="card">
-                            <div class="card-body d-flex align-items-center justify-content-between">
-                              <div>
-                                <h3 class="fw-bolder mb-75">25</h3>
-                                <span>医療システム部</span>
-                              </div>
-                              <div class="avatar bg-light-warning p-50">
-                                <span class="avatar-content">
-                                  <feather-icon icon="UserXIcon" class="font-medium-4"/>
-                                </span>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                    	<div class="col-lg-2 col-sm-4">
-                        <div class="card">
-                          <div class="card-body d-flex align-items-center justify-content-between">
-                            <div>
-                              <h3 class="fw-bolder mb-75">3</h3>
-                              <span>システム管理</span>
-                            </div>
-                            <div class="avatar bg-light-warning p-50">
-                              <span class="avatar-content">
-                                <feather-icon icon="UserXIcon" class="font-medium-4"/>
-                              </span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                </section>
-                <user-list-add-new
-                  :is-add-new-user-sidebar-active.sync="isAddNewUserSidebarActive"
-                  :role-options="roleOptions"
-                  :plan-options="planOptions"
-                  @refetch-data="refetchData"
-                />
+    <section class="app-user-list">
+        <div class="row">
+          <div class="col-lg-2 col-sm-4">
+            <div class="card">
+              <div class="card-body d-flex align-items-center justify-content-between">
+                <div>
+                  <h3 class="fw-bolder mb-75">55</h3>
+                  <span>社員数</span>
+                </div>
+                <div class="avatar bg-light-primary p-50">
+                  <span class="avatar-content">
+                    <feather-icon icon="UserIcon" class="font-medium-4"/>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+            <div class="col-lg-2 col-sm-4">
+              <div class="card">
+                <div class="card-body d-flex align-items-center justify-content-between">
+                  <div>
+                    <h3 class="fw-bolder mb-75">5</h3>
+                    <span>企画開発</span>
+                  </div>
+                  <div class="avatar bg-light-danger p-50">
+                    <span class="avatar-content">
+                      <feather-icon icon="UserPlusIcon" class="font-medium-4"/>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-2 col-sm-4">
+              <div class="card">
+                <div class="card-body d-flex align-items-center justify-content-between">
+                  <div>
+                    <h3 class="fw-bolder mb-75">6</h3>
+                    <span>営業部</span>
+                  </div>
+                  <div class="avatar bg-light-success p-50">
+                    <span class="avatar-content">
+                        <feather-icon icon="UserCheckIcon" class="font-medium-4"/>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-2 col-sm-4">
+              <div class="card">
+                <div class="card-body d-flex align-items-center justify-content-between">
+                  <div>
+                    <h3 class="fw-bolder mb-75">6</h3>
+                    <span>管理部</span>
+                  </div>
+                  <div class="avatar bg-light-warning p-50">
+                    <span class="avatar-content">
+                        <feather-icon icon="UserXIcon" class="font-medium-4"/>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-2 col-sm-4">
+              <div class="card">
+                <div class="card-body d-flex align-items-center justify-content-between">
+                  <div>
+                    <h3 class="fw-bolder mb-75">25</h3>
+                    <span>医療システム部</span>
+                  </div>
+                  <div class="avatar bg-light-warning p-50">
+                    <span class="avatar-content">
+                      <feather-icon icon="UserXIcon" class="font-medium-4"/>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <div class="col-lg-2 col-sm-4">
+            <div class="card">
+              <div class="card-body d-flex align-items-center justify-content-between">
+                <div>
+                  <h3 class="fw-bolder mb-75">3</h3>
+                  <span>システム管理</span>
+                </div>
+                <div class="avatar bg-light-warning p-50">
+                  <span class="avatar-content">
+                    <feather-icon icon="UserXIcon" class="font-medium-4"/>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </section>
+    <user-list-add-new
+      :is-add-new-user-sidebar-active.sync="isAddNewUserSidebarActive"
+      :role-options="roleOptions"
+      :plan-options="planOptions"
+      @refetch-data="refetchData"
+    />
     <!-- Filters -->
-
-
     <!-- Table Container Card -->
     <b-card
       no-body
@@ -112,70 +110,67 @@
       <h4 class="card-title">Search & Filter</h4>
     </div>
     <hr>
-      <div class="m-1">
-        <!-- Table Top -->
+    <div class="m-1">
+      <!-- Table Top -->
+      <b-row>
+        <!-- Per Page -->
+        <b-col
+          sm="12"
+          md="5"
+          class="mb-1"
+        >
+          <label>Show</label>
+          <v-select
+            v-model="perPage"
+            :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'"
+            :options="perPageOptions"
+            :clearable="false"
+            class="per-page-selector d-inline-block mx-50"
+          />
+          <label>entries</label>
+        </b-col>
+        <!-- Search -->
+        <b-col
+          sm="12"
+          md="7"
+          class="mb-1"
+        >
         <b-row>
-          <!-- Per Page -->
-          <b-col
-            sm="12"
-            md="5"
-            class="mb-1"
-          >
-            <label>Show</label>
-            <v-select
-              v-model="perPage"
-              :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'"
-              :options="perPageOptions"
-              :clearable="false"
-              class="per-page-selector d-inline-block mx-50"
-            />
-            <label>entries</label>
+          <b-col sm="12" md="4" lg="4" xl="4" class="mb-1" >
+            <b-form-input
+            v-model="searchQuery"
+            class="d-inline-block mr-1"
+            placeholder="Search..."
+          />
           </b-col>
-          <!-- Search -->
-          <b-col
-            sm="12"
-            md="7"
-            class="mb-1"
-          >
-            <b-row>
-                <b-col sm="12" md="4" lg="4" xl="4" class="mb-1" >
-                  <b-form-input
-                  v-model="searchQuery"
-                  class="d-inline-block mr-1"
-                  placeholder="Search..."
-                />
-                </b-col>
-                
-                <b-col sm="6" md="4" lg="4" xl="4" class="mb-1">
-                    <v-select
-                      v-model="selected1"
-                      :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'"
-                      :options="books"
-                      label="title"
-                    >
-                      <template #option="{title, icon}">
-                        <feather-icon
-                          :icon="icon"
-                          size="16"
-                          class="align-middle mr-50"/>
-                          <span>{{title}}</span>
-                      </template>
-                    </v-select>
-                </b-col>
-                <b-col sm="6" md="4" lg="4" xl="4" class="mb-1">
-                  <b-button
-                    variant="primary"
-                    @click="isAddNewUserSidebarActive = true"
-                  >
-                    <span class="text-nowrap">Add User</span>
-                  </b-button>
-                </b-col>
-            </b-row>
+          <b-col sm="6" md="4" lg="4" xl="4" class="mb-1">
+            <v-select
+              v-model="selected1"
+              :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'"
+              :options="books"
+              label="title"
+            >
+              <template #option="{title, icon}">
+                <feather-icon
+                  :icon="icon"
+                  size="16"
+                  class="align-middle mr-50"/>
+                  <span>{{title}}</span>
+              </template>
+            </v-select>
+          </b-col>
+          <b-col sm="6" md="4" lg="4" xl="4" class="mb-1">
+            <b-button
+              variant="primary"
+              @click="isAddNewUserSidebarActive = true"
+            >
+              <span class="text-nowrap">Add User</span>
+            </b-button>
           </b-col>
         </b-row>
-
-      </div>
-
+        </b-col>
+      </b-row>
+    </div>
       <b-table
         ref="refUserListTable"
         class="position-relative"
@@ -188,7 +183,6 @@
         empty-text="No matching records found"
         :sort-desc.sync="isSortDirDesc"
       >
-
         <!-- Column: User -->
         <template #cell(社員番号)="data">
           <b-media vertical-align="center">
@@ -210,7 +204,6 @@
             <small class="text-muted">@{{ data.item.username }}</small>
           </b-media>
         </template>
-
         <!-- Column: Role -->
         <template #cell(role)="data">
           <div class="text-nowrap">
@@ -223,7 +216,6 @@
             <span class="align-text-top text-capitalize">{{ data.item.role }}</span>
           </div>
         </template>
-
         <!-- Column: Status -->
         <template #cell(status)="data">
           <b-badge
@@ -234,7 +226,6 @@
             {{ data.item.status }}
           </b-badge>
         </template>
-
         <!-- Column: Actions -->
         <template #cell(actions)="data">
           <b-dropdown
@@ -242,7 +233,6 @@
             no-caret
             :right="$store.state.appConfig.isRTL"
           >
-
             <template #button-content>
               <feather-icon
                 icon="MoreVerticalIcon"
@@ -254,23 +244,19 @@
               <feather-icon icon="FileTextIcon" />
               <span class="align-middle ml-50">Details</span>
             </b-dropdown-item>
-
             <b-dropdown-item :to="{ name: 'apps-users-edit', params: { id: data.item.id } }">
               <feather-icon icon="EditIcon" />
               <span class="align-middle ml-50">Edit</span>
             </b-dropdown-item>
-
             <b-dropdown-item>
               <feather-icon icon="TrashIcon" />
               <span class="align-middle ml-50">Delete</span>
             </b-dropdown-item>
           </b-dropdown>
         </template>
-
       </b-table>
       <div class="mx-2 mb-2">
         <b-row>
-
           <b-col
             cols="12"
             sm="6"
@@ -284,7 +270,6 @@
             sm="6"
             class="d-flex align-items-center justify-content-center justify-content-sm-end"
           >
-
             <b-pagination
               v-model="currentPage"
               :total-rows="totalUsers"
@@ -308,9 +293,7 @@
                 />
               </template>
             </b-pagination>
-
           </b-col>
-
         </b-row>
       </div>
     </b-card>
@@ -328,16 +311,15 @@ import vSelect from 'vue-select'
 import store from '@/store'
 import { ref, onUnmounted } from '@vue/composition-api'
 import { avatarText } from '@core/utils/filter'
-import UsersListFilters from './../../views/apps/user/users-list/UsersListFilters.vue'
-import useUsersList from '../../views/apps/user/users-list/useUsersList'
-import userStoreModule from '../../views/apps/user/userStoreModule'
-import UserListAddNew from '../../views/apps/user/users-list/UserListAddNew.vue'
+import UsersListFilters from './users-list/UsersListFilters.vue'
+import useUsersList from './users-list/useUsersList'
+import userStoreModule from './users-list/userStoreModule'
+import UserListAddNew from './users-list/UserListAddNew.vue'
 
 export default {
   components: {
     UsersListFilters,
     UserListAddNew,
-
     BCard,
     BRow,
     BCol,
@@ -415,35 +397,7 @@ export default {
 
     return {
       //select1
-      selected1:[{
-          title:'Export',
-          icon:'ExternalLinkIcon',
-        }
-      ],
-          
-      option:[{title:'Square'},{title:'Rectangle'}],
-      books:[
-        {
-          title:'Print',
-          icon:'PrinterIcon'
-        },
-        {
-          title:'Csv',
-          icon:'FileTextIcon'
-        },
-        {
-          title:'Excel',
-          icon:'FileIcon'
-        },
-        {
-          title:'Pdf',
-          icon:'ClipboardIcon'
-        },
-        {
-          title:'Copy',
-          icon:'CopyIcon'
-        },
-      ],
+      
       // Sidebar
       isAddNewUserSidebarActive,
 
@@ -478,6 +432,37 @@ export default {
       statusFilter,
     }
   },
+  data(){
+    return{
+      selected1:[{
+          title:'Export',
+          icon:'ExternalLinkIcon',
+        }
+      ],
+      books:[
+        {
+          title:'Print',
+          icon:'PrinterIcon'
+        },
+        {
+          title:'Csv',
+          icon:'FileTextIcon'
+        },
+        {
+          title:'Excel',
+          icon:'FileIcon'
+        },
+        {
+          title:'Pdf',
+          icon:'ClipboardIcon'
+        },
+        {
+          title:'Copy',
+          icon:'CopyIcon'
+        },
+      ],
+    }
+  }
 }
 </script>
 

@@ -236,7 +236,7 @@ export default {
       datasets: [
         {
           data: [80, 150, 180, 270, 210, 160, 160, 202, 265, 210, 270, 255, 290, 360, 375],
-          label: 'Europe',
+          label: 'ヨーロッパ',
           borderColor: chartColors.lineChartDanger,
           lineTension: 0.5,
           pointStyle: 'circle',
@@ -255,7 +255,7 @@ export default {
         },
         {
           data: [80, 125, 105, 130, 215, 195, 140, 160, 230, 300, 220, 170, 210, 200, 280],
-          label: 'Asia',
+          label: 'アジア',
           borderColor: chartColors.lineChartPrimary,
           lineTension: 0.5,
           pointStyle: 'circle',
@@ -274,7 +274,7 @@ export default {
         },
         {
           data: [80, 99, 82, 90, 115, 115, 74, 75, 130, 155, 125, 90, 140, 130, 180],
-          label: 'Africa',
+          label: 'アフリカ',
           borderColor: chartColors.warningColorShade,
           lineTension: 0.5,
           pointStyle: 'circle',

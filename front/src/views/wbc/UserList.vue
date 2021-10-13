@@ -107,7 +107,7 @@
       class="mb-0"
     >
     <div class="m-1">
-      <h4 class="card-title">Search & Filter</h4>
+      <h4 class="card-title">検索 & フィルター</h4>
     </div>
     <hr>
     <div class="m-1">
@@ -119,7 +119,7 @@
           md="5"
           class="mb-1"
         >
-          <label>Show</label>
+          <label>見せる</label>
           <v-select
             v-model="perPage"
             :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'"
@@ -127,7 +127,7 @@
             :clearable="false"
             class="per-page-selector d-inline-block mx-50"
           />
-          <label>entries</label>
+          <label>エントリ</label>
         </b-col>
         <!-- Search -->
         <b-col
@@ -140,7 +140,7 @@
             <b-form-input
             v-model="searchQuery"
             class="d-inline-block mr-1"
-            placeholder="Search..."
+            placeholder="検索..."
           />
           </b-col>
           <b-col sm="6" md="4" lg="4" xl="4" class="mb-1">
@@ -164,7 +164,7 @@
               variant="primary"
               @click="isAddNewUserSidebarActive = true"
             >
-              <span class="text-nowrap">Add User</span>
+              <span class="text-nowrap">ユーザーを追加する</span>
             </b-button>
           </b-col>
         </b-row>
@@ -433,13 +433,13 @@ export default {
   data(){
     return{
       selected1:[{
-          title:'Export',
+          title:'書き出す',
           icon:'ExternalLinkIcon',
         }
       ],
       books:[
         {
-          title:'Print',
+          title:'印刷',
           icon:'PrinterIcon'
         },
         {
@@ -455,7 +455,7 @@ export default {
           icon:'ClipboardIcon'
         },
         {
-          title:'Copy',
+          title:'コピー',
           icon:'CopyIcon'
         },
       ],

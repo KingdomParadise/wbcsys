@@ -67,7 +67,7 @@
                 </div>
                 </div>
                 <div class="row my-2">
-                  <p class="card-text" style="width:100%"><span class="text-primary">チームメンバー</span></p>
+                  <p class="card-text" style="width:100%; padding-left: 14px;"><span class="text-primary">チームメンバー</span></p>
                   <div class="col-12 col-md-6">
                     <a class="d-flex" href="#">					
                       <div class="list-item d-flex align-items-start">

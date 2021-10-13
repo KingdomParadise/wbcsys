@@ -15,7 +15,7 @@
                             <b-input-group>
                                 <b-form-input
                                     id="shop-search"
-                                    placeholder="Search Product..."
+                                    placeholder="検索"
                                 />
                                 <b-input-group-append is-text>
                                     <feather-icon icon="SearchIcon" />
@@ -52,9 +52,9 @@
                             <span class="star star-gold">&nbsp; ★</span>
                         </small>
                         <b-dropdown class="small-dropdown e-caret-hide">
-                            <b-dropdown-item>Option 1</b-dropdown-item>
-                            <b-dropdown-item>Option 2</b-dropdown-item>
-                            <b-dropdown-item>Option 3</b-dropdown-item>
+                            <b-dropdown-item>説明 1</b-dropdown-item>
+                            <b-dropdown-item>説明 2</b-dropdown-item>
+                            <b-dropdown-item>説明 3</b-dropdown-item>
                         </b-dropdown>
                     </b-card-footer>
                 </b-card>
@@ -158,7 +158,7 @@
                                 name="fp_range"
                                 :config="config"
                                 class="form-control"
-                                placeholder="Select date"
+                                placeholder="YYYY-MM-DD to YYYY-MM-DD"
                             ></flat-pickr>
                         </b-form-group>
                     </b-col>

@@ -83,13 +83,13 @@
                       size="sm"
                       class="mr-3"
                     >
-                      Add
+                      追加
                     </b-button>
                     <b-button
                       variant="outline-secondary"
                       size="sm"
                     >
-                      Cancel
+                      キャンセル
                     </b-button>
                   </b-form-group>
                 </b-collapse>
@@ -142,13 +142,13 @@
                       size="sm"
                       class="mr-3"
                     >
-                      Add
+                      追加
                     </b-button>
                     <b-button
                       variant="outline-secondary"
                       size="sm"
                     >
-                      Cancel
+                      キャンセル
                     </b-button>
                   </b-form-group>
                 </b-collapse>

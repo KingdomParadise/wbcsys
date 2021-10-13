@@ -32,7 +32,6 @@
     </template>
 
     <b-dropdown-item
-      :to="{ name: 'pages-profile'}"
       link-class="d-flex align-items-center"
     >
       <feather-icon
@@ -43,7 +42,6 @@
       <span>Profile</span>
     </b-dropdown-item>
     <b-dropdown-item
-      :to="{ name: 'pages-account-setting' }"
       link-class="d-flex align-items-center"
     >
       <feather-icon

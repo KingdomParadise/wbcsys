@@ -1,6 +1,5 @@
 <template>
   <li
-    v-if="canViewVerticalNavMenuGroup(item)"
     class="nav-item has-sub"
     :class="{
       'open': isOpen,

@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import { ToastPlugin, ModalPlugin } from 'bootstrap-vue'
 import VueCompositionAPI from '@vue/composition-api'
+import Cookies from 'js-cookie'
 
 import i18n from '@/libs/i18n'
 import router from './router'
@@ -11,7 +12,7 @@ import App from './App.vue'
 import './global-components'
 
 // 3rd party plugins
-import '@axios'
+// import '@axios'
 import '@/libs/acl'
 import '@/libs/portal-vue'
 import '@/libs/clipboard'
@@ -21,7 +22,7 @@ import '@/libs/vue-select'
 import '@/libs/tour'
 
 // Axios Mock Adapter
-import '@/@fake-db/db'
+// import '@/@fake-db/db'
 
 // BSV Plugin Registration
 Vue.use(ToastPlugin)
@@ -48,3 +49,6 @@ new Vue({
   i18n,
   render: h => h(App),
 }).$mount('#app')
+
+window.axios = require('axios')
+window.axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';

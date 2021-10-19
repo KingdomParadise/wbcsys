@@ -13,7 +13,19 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
+header("Access-Control-Allow-Headers: Authorization");
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::middleware(['cors'])->group(function(){
+
+    Route::post('/auth/login', 'App\Http\Controllers\AuthController@login');
+    Route::post('/auth/register', 'App\Http\Controllers\AuthController@register');
+    Route::group([
+        'middleware' => 'jwt.verify',
+        'prefix' => 'auth'
+    ], function ($router) {
+        Route::post('/logout', 'App\Http\Controllers\AuthController@logout');
+        Route::post('/refresh', 'App\Http\Controllers\AuthController@refresh');
+        Route::get('/get_user', 'App\Http\Controllers\AuthController@userProfile');    
+    });
 });

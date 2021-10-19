@@ -5,26 +5,22 @@
     class="dropdown-user"
   >
     <template #button-content>
-      <div class="d-sm-flex d-none user-nav">
+      <div class="d-sm-flex d-none user-nav ml-2">
         <p class="user-name font-weight-bolder mb-0">
-          <!-- {{ userData.fullName || userData.username }} -->
-          Seo
+          
         </p>
         <span class="user-status">
-          管理者
-          <!-- {{ userData.role }} -->
+          {{userData ? userData.employee_name : ''}}
         </span>
       </div>
       <b-avatar
         size="40"
-        :src="userData.avatar"
         variant="light-primary"
         badge
         class="badge-minimal"
         badge-variant="success"
       >
         <feather-icon
-          v-if="!userData.fullName"
           icon="UserIcon"
           size="22"
         />
@@ -68,9 +64,8 @@
 import {
   BNavItemDropdown, BDropdownItem, BDropdownDivider, BAvatar,
 } from 'bootstrap-vue'
-import { initialAbility } from '@/libs/acl/config'
-import useJwt from '@/auth/jwt/useJwt'
-import { avatarText } from '@core/utils/filter'
+import Cookies from 'js-cookie'
+import { mapGetters } from 'vuex'
 
 export default {
   components: {
@@ -81,26 +76,20 @@ export default {
   },
   data() {
     return {
-      userData: JSON.parse(localStorage.getItem('userData')),
-      avatarText,
     }
+  },
+  computed: {
+    ...mapGetters({
+      userData: 'auth/user'
+    })
   },
   methods: {
     logout() {
-      // Remove userData from localStorage
-      // ? You just removed token from localStorage. If you like, you can also make API call to backend to blacklist used token
-      localStorage.removeItem(useJwt.jwtConfig.storageTokenKeyName)
-      localStorage.removeItem(useJwt.jwtConfig.storageRefreshTokenKeyName)
-
-      // Remove userData from localStorage
-      localStorage.removeItem('userData')
-
-      // Reset ability
-      this.$ability.update(initialAbility)
-
-      // Redirect to login page
-      this.$router.push({ name: 'auth-login' })
+      this.$store.dispatch('auth/logout')
     },
   },
+  mounted() {
+    this.$store.dispatch('auth/getUser')
+  }
 }
 </script>

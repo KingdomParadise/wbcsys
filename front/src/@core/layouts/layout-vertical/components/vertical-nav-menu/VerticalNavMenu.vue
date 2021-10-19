@@ -132,7 +132,6 @@ export default {
 
     // App Name
     const { appName, appLogoImage } = $themeConfig.app
-
     return {
       navMenuItems,
       perfectScrollbarSettings,

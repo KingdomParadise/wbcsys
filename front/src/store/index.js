@@ -6,6 +6,9 @@ import app from './app'
 import appConfig from './app-config'
 import verticalMenu from './vertical-menu'
 
+//wbc main
+import auth from './auth'
+
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -13,6 +16,7 @@ export default new Vuex.Store({
     app,
     appConfig,
     verticalMenu,
+    auth
   },
   strict: process.env.DEV,
 })

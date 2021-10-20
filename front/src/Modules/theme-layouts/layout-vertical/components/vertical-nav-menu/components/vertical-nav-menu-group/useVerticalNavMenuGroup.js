@@ -1,7 +1,7 @@
 // eslint-disable-next-line object-curly-newline
 import { ref, watch, inject, computed } from '@vue/composition-api'
 import store from '@/store'
-import { isNavGroupActive } from '@core/layouts/utils'
+import { isNavGroupActive } from '@/Modules/theme-layouts/utils'
 
 export default function useVerticalNavMenuGroup(item) {
   // ------------------------------------------------

@@ -28,5 +28,17 @@ class DatabaseSeeder extends Seeder
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
         ]);
+        DB::table('users')->insert([
+            'employee_name' => 'user',
+            'employee_id' => 'user',
+            'login_id' => 'user',
+            'password' => Hash::make('user'),
+            'del_flag' => '0',
+            'hire_date' => Carbon::now()->format("Y-m-d"),
+            'leave_date' => Carbon::now()->format("Y-m-d"),
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now()
+        ]);
+        
     }
 }

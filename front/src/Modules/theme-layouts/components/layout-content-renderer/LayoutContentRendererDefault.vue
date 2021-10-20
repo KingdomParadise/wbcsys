@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import AppBreadcrumb from '@core/layouts/components/AppBreadcrumb.vue'
+import AppBreadcrumb from '@/Modules/theme-layouts/components/AppBreadcrumb.vue'
 import useAppConfig from '@core/app-config/useAppConfig'
 
 export default {

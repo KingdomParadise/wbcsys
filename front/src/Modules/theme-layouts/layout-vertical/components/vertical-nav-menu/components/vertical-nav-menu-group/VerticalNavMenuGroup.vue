@@ -40,7 +40,7 @@
 
 <script>
 import { BLink, BBadge, BCollapse } from 'bootstrap-vue'
-import { resolveVerticalNavMenuItemComponent as resolveNavItemComponent } from '@core/layouts/utils'
+import { resolveVerticalNavMenuItemComponent as resolveNavItemComponent } from '@/Modules/theme-layouts/utils'
 import { useUtils as useI18nUtils } from '@core/libs/i18n'
 import { useUtils as useAclUtils } from '@core/libs/acl'
 import VerticalNavMenuHeader from '../vertical-nav-menu-header'

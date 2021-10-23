@@ -1,101 +1,108 @@
 import axios from 'axios'
 import * as types from '../mutation-types'
 import Cookies from 'js-cookie'
-import constants from '../constants'
-import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
+import appConfig from '@/appConfig'
 
-const {baseUrl} = constants
+import router from '@/router'
+
+const {apiBaseUrl} = appConfig
+
 
 export default {
   namespaced: true,
   state: {
-    user: null,
-    token: Cookies.get('token')
+    current_user: null,
+    token: Cookies.get('token'),
+    logged: false,
+    newUser: {
+      avatarUrl: '',
+      employee_name: '',
+      employee_id: '',
+      login_id: '',
+      password: '',
+      hire_date: '',
+      leave_date: '',
+      department_id: 0,
+      role: 0,
+      grade: '',
+      note: '',
+      mygoal: '',
+      affiliation: ''
+    }
   },
   getters: {
-    user: state => state.user,
+    current_user: state => state.current_user,
     token: state => state.token,
-    check: state => state.user !== null
+    check: state => state.user !== null,
+    newUser: state => state.newUser
   },
   mutations: {
-    [types.SAVE_TOKEN] (state, { token, remember }) {
+    [types.SAVE_TOKEN] (state, { token }) {
       state.token = token
-      Cookies.set('token', token, { expires: remember ? 365 : null })
-      Cookies.set('logged', true)
+      state.logged = true
+      localStorage.setItem('token', token)
+      localStorage.setItem('logged', true)
     },
   
-    [types.FETCH_USER_SUCCESS] (state, { user }) {
-      state.user = user
-      Cookies.set('userData', user)
-    },
-  
-    [types.FETCH_USER_FAILURE] (state) {
-      state.token = null
-      Cookies.remove('token')
-      Cookies.remove('logged')
+    [types.SET_CURRENT_USER] (state, { user }) {
+      state.current_user = user
     },
   
     [types.LOGOUT] (state) {
       state.user = null
       state.token = null
-      Cookies.remove('token')
-      Cookies.remove('logged')
+      localStorage.removeItem('token')
+      localStorage.removeItem('logged')
+      router.push('/login')
     },
-  
-    [types.UPDATE_USER] (state, { user }) {
-      state.user = user
-    }
   },
   actions: {
     async getUser ({ commit, state }) {
       try {
-        console.log(state.token);
-        const { data } = await axios.get(baseUrl + 'auth/get_user', {headers: {'Authorization': `Bearer ${Cookies.get('token')}`}})
+        const { data } = await axios.get(apiBaseUrl + 'auth/get_user', {headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}})
         console.log(data)
         if (data.success) {
-          commit(types.FETCH_USER_SUCCESS, { user: data.msg })
+          console.log(data.msg.token)
+          commit(types.SET_CURRENT_USER, { user: data.msg.user })
         } else {
-          commit(types.FETCH_USER_FAILURE)
+          commit(types.LOGOUT)
         }
       } catch (e) {
-        console.log(e);
-        commit(types.FETCH_USER_FAILURE)
+        commit(types.LOGOUT)
       }
-    },
-
-    updateUser ({ commit }, payload) {
-      commit(types.UPDATE_USER, payload)
     },
 
     async logout ({ commit }) {
       try {
-        const { data } = await axios.post(baseUrl + 'auth/logout')
+        const { data } = await axios.post(apiBaseUrl + 'auth/logout')
         console.log(data)
-      } catch (e) { }
-
+      } catch (e) { 
+      }
       commit(types.LOGOUT)
-      document.location = '/login'
     },
 
     async registerUser ({commit}, payload){
-      const { data } = await axios.post("/api/register",payload);
+      const { data } = await axios.post(apiBaseUrl + "auth/register",payload, {
+        headers: {
+          'Content-Type': "multipart/form-data"
+        }
+      });
       if(data.success){
-        document.location = "/login";
+        router.push('/login')
       }
     },
+
     async loginUser ({commit}, payload){
       try {
-        const res = await axios.post(baseUrl + "auth/login", payload);
-        console.log(res)
+        const res = await axios.post(apiBaseUrl + "auth/login", payload);
         if (res.data.success) {
           commit(types.SAVE_TOKEN, {token:res.data.msg.access_token, remember:true});
-          commit(types.FETCH_USER_SUCCESS, {user:res.data.msg.user});
-          document.location = "/";
+          commit(types.SET_CURRENT_USER, {user:res.data.msg.user});
+          router.push('/')
         }
       } catch (error) {
-
+        
       }
-      
     }
   }
 }

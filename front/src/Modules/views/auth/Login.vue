@@ -146,12 +146,14 @@ export default {
   },
   methods: {
     login() {
+      console.log(this.$router);
       this.$refs.loginForm.validate().then(success => {
         if (success) {
           this.$store.dispatch('auth/loginUser', {
             login_id: this.login_id,
             password: this.password
           })
+
         }
       })
     },

@@ -10,10 +10,23 @@
           
         </p>
         <span class="user-status">
-          {{userData ? userData.employee_name : ''}}
+          {{current_user ? current_user.employee_name : ''}}
         </span>
       </div>
+
+
       <b-avatar
+        v-if="current_user.user_avatar"
+        size="40"
+        variant="light-primary"
+        badge
+        class="badge-minimal"
+        badge-variant="success"
+        :src="'http://localhost:8000/upload/avatar/' + current_user.user_avatar"
+      >
+      </b-avatar>
+      <b-avatar
+        v-if="!current_user.user_avatar"
         size="40"
         variant="light-primary"
         badge
@@ -64,7 +77,6 @@
 import {
   BNavItemDropdown, BDropdownItem, BDropdownDivider, BAvatar,
 } from 'bootstrap-vue'
-import Cookies from 'js-cookie'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -80,7 +92,7 @@ export default {
   },
   computed: {
     ...mapGetters({
-      userData: 'auth/user'
+      current_user: 'auth/current_user'
     })
   },
   methods: {
@@ -90,6 +102,7 @@ export default {
   },
   mounted() {
     this.$store.dispatch('auth/getUser')
+    this.$store.dispatch('common/getDepartments')
   }
 }
 </script>

@@ -63,7 +63,7 @@ export default defineComponent({
       return this.$route.params.label ? this.$route.params.label : ""
     },
     ...mapGetters({
-      userData: 'auth/user'
+      userData: 'auth/current_user'
     }),
   },
   setup() {
@@ -80,5 +80,16 @@ export default defineComponent({
       userInfo
     }
   },
+  mounted() {
+    // this.$toast({
+    //   component: ToastificationContent,
+    //   props: {
+    //     title: `Welcome `,
+    //     icon: 'CoffeeIcon',
+    //     variant: 'success',
+    //     text: `You have successfully logged in as . Now you can start to explore!`,
+    //   },
+    // })
+  }
 })
 </script>

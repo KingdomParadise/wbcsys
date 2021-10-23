@@ -24,13 +24,16 @@ class CreateUsersTable extends Migration
             $table->string('leave_date')->nullable(); //退社日
             $table->string('grade')->nullable(); //等級
             $table->string('affiliation')->nullable(); //所属サークル
+            $table->string('mygoal')->nullable(); //所属サークル
             $table->string('note')->nullable(); //備考
             $table->integer('creator_id')->nullable(); //作成者（ユーザID)
             $table->integer('updater_id')->nullable(); //更新者（ユーザID）
-            $table->enum('del_flag', ['0', '1']); //削除区分
-            $table->string('email')->nullable();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->rememberToken();
+            $table->integer('department_id');
+            $table->integer('role'); 
+            $table->enum('del_flag', ['0', '1'])->default(0); //削除区分
+            // $table->string('email')->nullable();
+            // $table->timestamp('email_verified_at')->nullable();
+            // $table->rememberToken();
             $table->timestamps();
         });
     }

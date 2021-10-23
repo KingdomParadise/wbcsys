@@ -10,15 +10,17 @@
           </b-card-header >
           <b-card-body class="mt-2">
             <div class="d-flex mb-2">
-              <b-img :src="require('@/assets/images/profile/user-uploads/user-02.jpg')" rounded class="mr-2" width="300" height="300" />
+              <b-img v-if="!preview" :src="require('@/assets/images/avatars/9.png')" rounded class="mr-2" width="300" height="300" />
+              <b-img v-if="preview" :src="preview" rounded class="mr-2" width="300" height="300" />
               <div class="d-flex align-items-end mt-75 ms-1">
                 <div>
                   <label for="user-avatar-upload" class="btn btn-sm btn-primary mb-75 mr-1">アップロード</label>
-                  <input type="file" id="user-avatar-upload" hidden accept="image/*" />
+                  <input type="file" @change="previewImage" id="user-avatar-upload" hidden accept="image/*" />
                   <b-button
                     variant="outline-primary"
                     size="sm"
                     class="mb-75"
+                    @click="resetImage"
                   >
                     リセット
                   </b-button>
@@ -31,34 +33,36 @@
                 <b-col md="6">
                   <b-form-group
                     label="社員ID（ログインID）"
-                    label-for="employee-id"
+                    label-for="employee_id"
                   >
                     <b-form-input
-                      id="employee-id"
+                      id="employee_id"
                       placeholder="社員ID"
+                      v-model="newUser.employee_id"
                     />
                   </b-form-group>
                 </b-col>
                 <b-col md="6">
                   <b-form-group
                     label="ユーザ名"
-                    label-for="username"
+                    label-for="employee_name"
                   >
                     <b-form-input
-                      id="username"
+                      id="employee_name"
                       placeholder="ユーザ名"
+                      v-model="newUser.employee_name"
                     />
                   </b-form-group>
                 </b-col>
                 <b-col md="6">
                   <b-form-group
                     label="メールアドレス"
-                    label-for="email-address"
+                    label-for="login_id"
                   >
                     <b-form-input
-                      id="email-address"
-                      type="email"
+                      id="login_id"
                       placeholder="メールアドレス"
+                      v-model="newUser.login_id"
                     />
                   </b-form-group>
                 </b-col>
@@ -68,31 +72,37 @@
                     label-for="password"
                   >
                     <b-form-input
-                      type="password"
                       id="password"
                       placeholder="パスワード"
+                      v-model="newUser.password"
                     />
                   </b-form-group>
                 </b-col>
                 <b-col md="6">
                   <b-form-group
                     label="入社日"
-                    label-for="hire-date"
+                    label-for="hire_date"
                   >
-                    <b-form-input
-                      id="hire-date"
+                    <b-form-datepicker
+                      id="hire_date"
                       placeholder="入社日"
+                      :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }"
+                      locale="ja"
+                      v-model="newUser.hire_date"
                     />
                   </b-form-group>
                 </b-col>
                 <b-col md="6">
                   <b-form-group
                     label="退社日"
-                    label-for="leaving-date"
+                    label-for="leave_date"
                   >
-                    <b-form-input
-                      id="leaving-date"
+                    <b-form-datepicker
+                      id="leave_date"
                       placeholder="退社日"
+                      :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }"
+                      locale="ja"
+                      v-model="newUser.leave_date"
                     />
                   </b-form-group>
                 </b-col>
@@ -104,8 +114,17 @@
                     <b-form-select
                       id="department"
                       placeholder="所属部署"
-                      :options="departmentOptions"
-                    />
+                      v-model="newUser.department_id"
+                    >
+                      <option value="0"></option>
+                      <option
+                        v-for="department in departments"
+                        :key="department.id"
+                        :value="department.id"
+                      >
+                        {{department.department_name}}
+                      </option>
+                    </b-form-select>
                   </b-form-group>
                 </b-col>
                 <b-col md="6">
@@ -115,9 +134,11 @@
                   >
                     <b-form-select
                       id="director"
-                      placeholder="役職"
-                      :options="directorOptions"
-                    />
+                      v-model="newUser.role"
+                      placeholder="所属部署"
+                      :options="roleOptions"
+                    >
+                    </b-form-select>
                   </b-form-group>
                 </b-col>
                 <b-col md="6">
@@ -128,29 +149,32 @@
                     <b-form-input
                       id="grade"
                       placeholder="等級"
+                      v-model="newUser.grade"
                     />
                   </b-form-group>
                 </b-col>
                 <b-col md="6">
                   <b-form-group
                     label="所属サークル"
-                    label-for="affiliation-circle"
+                    label-for="affiliation"
                   >
                     <b-form-input
-                      id="affiliation-circle"
+                      id="affiliation"
                       placeholder="所属サークル"
+                      v-model="newUser.affiliation"
                     />
                   </b-form-group>
                 </b-col>
                 <b-col md="6">
                   <b-form-group
                     label="備考"
-                    label-for="remarks"
+                    label-for="note"
                   >
                     <b-form-textarea
-                      id="remarks"
+                      id="note"
                       placeholder="備考"
                       rows="10"
+                      v-model="newUser.note"
                     />
                   </b-form-group>
                 </b-col>
@@ -163,6 +187,7 @@
                       id="mygoal"
                       placeholder="自分の目標"
                       rows="10"
+                      v-model="newUser.mygoal"
                     />
                   </b-form-group>
                 </b-col>
@@ -172,6 +197,7 @@
                     type="submit"
                     variant="primary"
                     class="mr-1"
+                    @click="register"
                   >
                     登録
                   </b-button>
@@ -206,9 +232,12 @@ import {
   BFormSelect, 
   BForm, 
   BFormTextarea,
-  BImg
+  BImg,
+  BFormDatepicker
 } from 'bootstrap-vue'
+import vSelect from 'vue-select'
 import Ripple from 'vue-ripple-directive'
+import { mapGetters } from 'vuex'
 
 export default {
   components: {
@@ -224,36 +253,82 @@ export default {
     BFormSelect,
     BFormTextarea,
     BForm,
-    BImg
+    BImg,
+    BFormDatepicker,
+
+    vSelect
   },
   directives: {
     Ripple
   },
-  data() {
-    return {
-      departmentOptions: [
-        "部署",
-        "部署1",
-        "部署1",
-        "部署1",
-        "部署1",
-        "部署1",
-        "部署1",
-      ],
-      directorOptions: [
-        "役職",
-        "役職1",
-        "役職1",
-        "役職1",
-        "役職1",
-        "役職1",
-        "役職1",
-      ],
+  computed: {
+    ...mapGetters({
+      departments: 'common/departments',
+      // newUser: 'auth/newUser'
+    }),
+  },
+  methods: {
+    register() {
+      console.log(this.newUser)
+      let formData = new FormData()
+      Object.keys(this.newUser).forEach(key => {
+        formData.append(key, this.newUser[key])
+      })
+      this.$store.dispatch('auth/registerUser', formData)
+    },
+    previewImage: function(event) {
+      var input = event.target;
+      if (input.files) {
+        var reader = new FileReader();
+        reader.onload = (e) => {
+          this.preview = e.target.result;
+        }
+        this.newUser.avatar=input.files[0];
+        reader.readAsDataURL(input.files[0]);
+      }
+    },
+    resetImage: function() {
+      this.preview = null
+      this.newUser.avatar = null
     }
   },
-  created() {
-
-  },
+  setup() {
+    const roleOptions = [
+      {
+        value: 0,
+        text: 'admin'
+      },
+      {
+        value: 1,
+        text: 'user'
+      },
+      {
+        value: 2,
+        text: 'guest'
+      }
+    ]
+    const newUser = {
+      avatarUrl: '',
+      employee_name: '',
+      employee_id: '',
+      login_id: '',
+      password: '',
+      hire_date: '',
+      leave_date: '',
+      department_id: 0,
+      role: 0,
+      grade: '',
+      note: '',
+      mygoal: '',
+      affiliation: ''
+    }
+    const preview = null
+    return {
+      roleOptions,
+      newUser,
+      preview
+    }
+  }
 }
 </script>
 

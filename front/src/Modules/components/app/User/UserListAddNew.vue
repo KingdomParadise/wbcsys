@@ -58,7 +58,7 @@
               />
 
               <b-form-invalid-feedback>
-                {{ validationContext.errors[0] }}
+                この項目は必須です。
               </b-form-invalid-feedback>
             </b-form-group>
           </validation-provider>

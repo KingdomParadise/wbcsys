@@ -16,17 +16,17 @@
 
 
       <b-avatar
-        v-if="current_user.user_avatar"
+        v-if="current_user && current_user.avatar_url"
         size="40"
         variant="light-primary"
         badge
         class="badge-minimal"
         badge-variant="success"
-        :src="'http://localhost:8000/upload/avatar/' + current_user.user_avatar"
+        :src="'http://localhost:8000/upload/avatar/' + current_user.avatar_url"
       >
       </b-avatar>
       <b-avatar
-        v-if="!current_user.user_avatar"
+        v-if="current_user && !current_user.avatar_url"
         size="40"
         variant="light-primary"
         badge
@@ -103,6 +103,8 @@ export default {
   mounted() {
     this.$store.dispatch('auth/getUser')
     this.$store.dispatch('common/getDepartments')
+    this.$store.dispatch('common/getRoles')
+    this.$store.dispatch('common/getTags')
   }
 }
 </script>

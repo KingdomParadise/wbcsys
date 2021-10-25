@@ -5,8 +5,10 @@ import appConfig from '@/appConfig'
 
 import router from '@/router'
 
-const {apiBaseUrl} = appConfig
+import Vue from 'vue'
+import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
 
+const {apiBaseUrl} = appConfig
 
 export default {
   namespaced: true,
@@ -15,7 +17,7 @@ export default {
     token: Cookies.get('token'),
     logged: false,
     newUser: {
-      avatarUrl: '',
+      avatar_url: '',
       employee_name: '',
       employee_id: '',
       login_id: '',
@@ -23,11 +25,12 @@ export default {
       hire_date: '',
       leave_date: '',
       department_id: 0,
-      role: 0,
+      role_id: null,
       grade: '',
       note: '',
       mygoal: '',
-      affiliation: ''
+      affiliation: '',
+      preview: null
     }
   },
   getters: {
@@ -55,6 +58,26 @@ export default {
       localStorage.removeItem('logged')
       router.push('/login')
     },
+
+    [types.SET_NEW_USER] (state) {
+      console.log('setnewuser')
+      state.newUser = {
+        avatar_url: '',
+        employee_name: '',
+        employee_id: '',
+        login_id: '',
+        password: '',
+        hire_date: '',
+        leave_date: '',
+        department_id: 0,
+        role: 0,
+        grade: '',
+        note: '',
+        mygoal: '',
+        affiliation: '',
+        preview: null
+      }
+    }
   },
   actions: {
     async getUser ({ commit, state }) {
@@ -81,14 +104,35 @@ export default {
       commit(types.LOGOUT)
     },
 
-    async registerUser ({commit}, payload){
-      const { data } = await axios.post(apiBaseUrl + "auth/register",payload, {
-        headers: {
-          'Content-Type': "multipart/form-data"
+    async registerUser ({commit, state}, payload){
+      try {
+        let formData = new FormData()
+        Object.keys(state.newUser).forEach(key => {
+          formData.append(key, state.newUser[key])
+        })
+        const { data } = await axios.post(apiBaseUrl + "auth/register", formData, {
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('token')}`,
+            'Content-Type': "multipart/form-data"
+          }
+        })
+        if(data.success){
+          commit(types.SET_NEW_USER)
+          Vue.$toast({
+            component: ToastificationContent,
+            position: 'top-right',
+            props: {
+              title: `成功`,
+              icon: 'CoffeeIcon',
+              variant: 'success',
+              text: `ユーザー登録は成功です。`,
+            },
+          })
+        } else {
+
         }
-      });
-      if(data.success){
-        router.push('/login')
+      } catch (error) {
+        commit(types.LOGOUT)
       }
     },
 
@@ -98,10 +142,23 @@ export default {
         if (res.data.success) {
           commit(types.SAVE_TOKEN, {token:res.data.msg.access_token, remember:true});
           commit(types.SET_CURRENT_USER, {user:res.data.msg.user});
+          console.log('login',res.data)
+          Vue.$toast({
+            component: ToastificationContent,
+            position: 'top-right',
+            props: {
+              title: `いらっしゃいませ`,
+              icon: 'CoffeeIcon',
+              variant: 'success',
+              text: `正常にログインしました。`,
+            },
+          }, {
+            onClose: () => console.log("closed!")
+          })
           router.push('/')
         }
       } catch (error) {
-        
+        console.log(error)
       }
     }
   }

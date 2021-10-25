@@ -9,6 +9,9 @@ use Illuminate\Notifications\Notifiable;
 
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
+use App\Models\DepartmentMaster;
+use App\Models\RoleMaster;
+
 
 class User extends Authenticatable implements JWTSubject
 {
@@ -24,7 +27,7 @@ class User extends Authenticatable implements JWTSubject
         'employee_id',
         'login_id',
         'password',
-        'user_avatar',
+        'avatar_url',
         'hire_date',
         'leave_date',
         'affiliation',
@@ -73,4 +76,12 @@ class User extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims() {
         return [];
     }    
+
+    public function departmentMaster() {
+        return $this->belongsTo(DepartmentMaster::class, 'department_id');
+    }
+    
+    public function roleMaster() {
+        return $this->belongsTo(RoleMaster::class, 'role_id');
+    }
 }

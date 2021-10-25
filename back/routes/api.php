@@ -21,20 +21,27 @@ Route::middleware(['cors'])->group(function(){
 
     Route::post('/auth/login', 'App\Http\Controllers\AuthController@login');
     Route::post('/auth/register', 'App\Http\Controllers\AuthController@register');
-    Route::group([
-        'middleware' => 'jwt.verify',
-        'prefix' => 'auth'
-    ], function ($router) {
-        Route::post('/logout', 'App\Http\Controllers\AuthController@logout');
-        Route::post('/refresh', 'App\Http\Controllers\AuthController@refresh');
-        Route::get('/get_user', 'App\Http\Controllers\AuthController@userProfile');
-        Route::post('/get_auth', 'App\Http\Controllers\AuthController@getAuth');
-    });
+    
     Route::group([
         'middleware' => 'jwt.verify',
     ], function ($router) {
-        Route::get('/question', 'App\Http\Controllers\QuestionController@index');
-        Route::post('/question', 'App\Http\Controllers\QuestionController@createQuestion');
+        
         Route::get('/departments', 'App\Http\Controllers\DepartmentMasterController@index');
+        Route::get('/tags', 'App\Http\Controllers\TagMasterController@index');
+        Route::get('/roles', 'App\Http\Controllers\RoleMasterController@index');
+        Route::group([
+            'prefix' => 'auth'
+        ], function($router) {
+            Route::post('/logout', 'App\Http\Controllers\AuthController@logout');
+            Route::post('/refresh', 'App\Http\Controllers\AuthController@refresh');
+            Route::get('/get_user', 'App\Http\Controllers\AuthController@userProfile');
+            Route::post('/get_auth', 'App\Http\Controllers\AuthController@getAuth');
+        });
+
+        Route::group([
+            'prefix' => 'qa'
+        ], function($router) {
+            Route::post('/post_question', 'App\Http\Controllers\QAController@postQuestion');
+        });
     });
 });

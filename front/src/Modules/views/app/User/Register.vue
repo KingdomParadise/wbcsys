@@ -10,8 +10,8 @@
           </b-card-header >
           <b-card-body class="mt-2">
             <div class="d-flex mb-2">
-              <b-img v-if="!preview" :src="require('@/assets/images/avatars/9.png')" rounded class="mr-2" width="300" height="300" />
-              <b-img v-if="preview" :src="preview" rounded class="mr-2" width="300" height="300" />
+              <b-img v-if="!newUser.preview" :src="require('@/assets/images/avatars/default.png')" rounded class="mr-2" width="300" height="300" />
+              <b-img v-if="newUser.preview" :src="newUser.preview" rounded class="mr-2" width="300" height="300" />
               <div class="d-flex align-items-end mt-75 ms-1">
                 <div>
                   <label for="user-avatar-upload" class="btn btn-sm btn-primary mb-75 mr-1">アップロード</label>
@@ -118,7 +118,7 @@
                     >
                       <option value="0"></option>
                       <option
-                        v-for="department in departments"
+                        v-for="department in common_states.departments"
                         :key="department.id"
                         :value="department.id"
                       >
@@ -134,10 +134,17 @@
                   >
                     <b-form-select
                       id="director"
-                      v-model="newUser.role"
+                      v-model="newUser.role_id"
                       placeholder="所属部署"
-                      :options="roleOptions"
+                      required
                     >
+                      <option
+                        v-for="role in common_states.roles"
+                        :key="role.id"
+                        :value="role.id"
+                      >
+                        {{role.role_name}}
+                      </option>
                     </b-form-select>
                   </b-form-group>
                 </b-col>
@@ -263,32 +270,27 @@ export default {
   },
   computed: {
     ...mapGetters({
-      departments: 'common/departments',
-      // newUser: 'auth/newUser'
+      common_states: 'common/common_states',
+      newUser: 'auth/newUser'
     }),
   },
   methods: {
     register() {
-      console.log(this.newUser)
-      let formData = new FormData()
-      Object.keys(this.newUser).forEach(key => {
-        formData.append(key, this.newUser[key])
-      })
-      this.$store.dispatch('auth/registerUser', formData)
+      this.$store.dispatch('auth/registerUser')
     },
     previewImage: function(event) {
       var input = event.target;
       if (input.files) {
         var reader = new FileReader();
         reader.onload = (e) => {
-          this.preview = e.target.result;
+          this.newUser.preview = e.target.result;
         }
         this.newUser.avatar=input.files[0];
         reader.readAsDataURL(input.files[0]);
       }
     },
     resetImage: function() {
-      this.preview = null
+      this.newUser.preview = null
       this.newUser.avatar = null
     }
   },
@@ -307,26 +309,9 @@ export default {
         text: 'guest'
       }
     ]
-    const newUser = {
-      avatarUrl: '',
-      employee_name: '',
-      employee_id: '',
-      login_id: '',
-      password: '',
-      hire_date: '',
-      leave_date: '',
-      department_id: 0,
-      role: 0,
-      grade: '',
-      note: '',
-      mygoal: '',
-      affiliation: ''
-    }
-    const preview = null
+    
     return {
       roleOptions,
-      newUser,
-      preview
     }
   }
 }

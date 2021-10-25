@@ -65,7 +65,7 @@ let authorizer = (channel, options) => {
         channel_name: channel.name
       }, {
         headers: {
-          Authorization: Cookies.get('token') ? `Bearer ${Cookies.get('token')}` : null,
+          Authorization: localStorage.getItem('token') ? `Bearer ${localStorage.getItem('token')}` : null,
           'Content-Type': 'application/json'
         }
       })

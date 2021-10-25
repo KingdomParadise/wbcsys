@@ -19,7 +19,7 @@ class CreateUsersTable extends Migration
             $table->string('login_id')->unique(); //ログインID
             $table->string('password'); //パスワード
             $table->string('employee_name'); //社員氏名
-            $table->string('user_avatar')->nullable(); //画像ファイル
+            $table->string('avatar_url')->nullable(); //画像ファイル
             $table->string('hire_date')->nullable(); //入社日
             $table->string('leave_date')->nullable(); //退社日
             $table->string('grade')->nullable(); //等級
@@ -29,11 +29,8 @@ class CreateUsersTable extends Migration
             $table->integer('creator_id')->nullable(); //作成者（ユーザID)
             $table->integer('updater_id')->nullable(); //更新者（ユーザID）
             $table->integer('department_id');
-            $table->integer('role'); 
+            $table->integer('role_id'); 
             $table->enum('del_flag', ['0', '1'])->default(0); //削除区分
-            // $table->string('email')->nullable();
-            // $table->timestamp('email_verified_at')->nullable();
-            // $table->rememberToken();
             $table->timestamps();
         });
     }

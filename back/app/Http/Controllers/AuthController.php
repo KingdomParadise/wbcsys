@@ -9,6 +9,7 @@ use Validator;
 use JWTAuth;
 use Illuminate\Support\Facades\Log;
 use Pusher\Pusher;
+use Illuminate\Support\Facades\Hash;
 
 
 class AuthController extends Controller
@@ -53,42 +54,52 @@ class AuthController extends Controller
             'employee_name' => 'required|string|between:1,100',
             'employee_id' => 'required|string|between:1,100|unique:users',
             'login_id' => 'required|string|max:100|unique:users',
-            'password' => 'required|string|min:6',
             'department_id' => 'required'
-            // 'password' => 'required|string|confirmed|min:6',
         ]);
-        Log::info('register validation');
+
         if($validator->fails()) {
-            return response()->json($validator->errors()->toJson(), 400);
+            return response()->json([
+                'error' => [
+                    $validator->errors()->toJson()
+                ],
+                'success' => false
+            ], 200);
         }
+
         $upload_path = public_path('upload/avatar');
-        Log::info([$upload_path, $request->file('avatar')]);
+        
         $file = $request->file('avatar');
+
         $generated_new_name = '';
+
+        $user = new User();
+
         if ($file) {
             $generated_new_name = time() . '.' . 'jpg';
             $request->file('avatar')->move($upload_path, $generated_new_name);
+            $user->avatar_url = "upload/avatar/".$generated_new_name;
         }
-        $user = User::create([
-            'employee_id' => $request->employee_id,
-            'employee_name' => $request->employee_name,
-            'login_id' => $request->login_id,
-            'hire_date' => $request->hire_date,
-            'leave_date' => $request->leave_date,
-            'role' => $request->role,
-            'department_id' => $request->department_id,
-            'note' => $request->note,
-            'affiliation' => $request->affiliation,
-            'mygoal' => $request->mygoal,
-            'user_avatar' => $generated_new_name,
-            'password' => bcrypt($request->password)
-        ]);
-        Log::info($user);
+
+        $user->employee_id = $request->employee_id;
+        $user->employee_name = $request->employee_name;
+        $user->login_id = $request->login_id;
+        $user->hire_date = $request->hire_date;
+        $user->leave_date = $request->leave_date;
+        $user->role_id = $request->role_id;
+        $user->department_id = $request->department_id;
+        $user->note = $request->note;
+        $user->affiliation = $request->affiliation;
+        $user->mygoal = $request->mygoal;
+        $user->password = Hash::make($request->password);
+        $user->save();
 
         return response()->json([
-            'message' => 'User successfully registered',
-            'user' => $user
-        ], 201);
+            'success' => true,
+            'msg' => [
+                'desc' => 'User successfully registered',
+                'user' => $user
+            ]
+        ], 200);
     }
 
 
@@ -118,9 +129,10 @@ class AuthController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     public function userProfile() {
+        $user = User::with('departmentMaster')->where('id', auth()->user()->id)->where('del_flag', '0')->first();
         return response()->json([
             'msg' => [
-                'user' => auth()->user(),
+                'user' => $user,
                 // 'token' => JWTAuth::refresh(JWTAuth::getToken())
             ],
             'success' => true

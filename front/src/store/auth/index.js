@@ -137,12 +137,12 @@ export default {
     },
 
     async loginUser ({commit}, payload){
+      console.log(payload)
       try {
         const res = await axios.post(apiBaseUrl + "auth/login", payload);
         if (res.data.success) {
           commit(types.SAVE_TOKEN, {token:res.data.msg.access_token, remember:true});
           commit(types.SET_CURRENT_USER, {user:res.data.msg.user});
-          console.log('login',res.data)
           Vue.$toast({
             component: ToastificationContent,
             position: 'top-right',
@@ -152,13 +152,31 @@ export default {
               variant: 'success',
               text: `正常にログインしました。`,
             },
-          }, {
-            onClose: () => console.log("closed!")
           })
           router.push('/')
+        } else {
+          Vue.$toast({
+            component: ToastificationContent,
+            position: 'top-right',
+            props: {
+              title: `いらっしゃいませ`,
+              icon: 'CoffeeIcon',
+              variant: 'danger',
+              text: `ログインに失敗しました。`,
+            },
+          })
         }
       } catch (error) {
-        console.log(error)
+        Vue.$toast({
+          component: ToastificationContent,
+          position: 'top-right',
+          props: {
+            title: `いらっしゃいませ`,
+            icon: 'CoffeeIcon',
+            variant: 'danger',
+            text: `ログインに失敗しました。`,
+          },
+        })
       }
     }
   }

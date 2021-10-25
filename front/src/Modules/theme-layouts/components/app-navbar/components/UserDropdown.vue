@@ -22,7 +22,7 @@
         badge
         class="badge-minimal"
         badge-variant="success"
-        :src="'http://localhost:8000/upload/avatar/' + current_user.avatar_url"
+        :src="'http://localhost:8000/' + current_user.avatar_url"
       >
       </b-avatar>
       <b-avatar

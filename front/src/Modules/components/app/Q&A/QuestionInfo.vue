@@ -5,7 +5,7 @@
         <b-row>
           <b-col sm="6">
             <b-input-group class="input-group-merge">
-              <b-form-input placeholder="検索"></b-form-input>
+              <b-form-input placeholder="検索" v-model="searchVal"></b-form-input>
               <b-input-group-append is-text>
                 <feather-icon icon="SearchIcon"></feather-icon>
               </b-input-group-append>
@@ -42,7 +42,7 @@
                 <b-col lg="5">
                   <div class="d-flex align-items-center">
                     <feather-icon 
-                      class="mr-2 cursor-pointer" 
+                      :class="['mr-2', 'cursor-pointer', newQuestion.attachment && 'text-danger']" 
                       icon="UploadIcon"
                       @click="onUploadBtnClick"
                     ></feather-icon>
@@ -72,6 +72,7 @@
   </section>
 </template>
 <script>
+import ToastificationContentVue from '@core/components/toastification/ToastificationContent.vue'
 import { defineComponent } from '@vue/composition-api'
 import {
   BCard, 
@@ -109,8 +110,17 @@ export default defineComponent({
   computed: {
     ...mapGetters({
       newQuestion: 'qa/newQuestion',
-      common_states: 'common/common_states'
+      common_states: 'common/common_states',
+      qaSearchVal: 'qa/qaSearchVal'
     }),
+    searchVal: {
+      get(){
+        return this.qaSearchVal
+      },
+      set(searchVal){
+        this.$store.commit('qa/SET_QA_SEARCHVAL', {searchVal})
+      } 
+    }
   },
   setup() {
     
@@ -120,21 +130,33 @@ export default defineComponent({
       this.$refs.uploader.click()
     },
     postQuestion() {
-      this.$swal({
-        title: 'Are you sure?',
-        icon: 'question',
-        showCancelButton: true,
-        confirmButtonText: 'Yes, post it!',
-        customClass: {
-          confirmButton: 'btn btn-primary',
-          cancelButton: 'btn btn-outline-danger ml-1',
-        },
-        buttonsStyling: false,
-      }).then(result => {
-        if (result.value) {
-          console.log(this.newQuestion)
-        }
-      })
+      if (this.newQuestion.content !== '') {
+        this.$swal({
+          title: 'Are you sure?',
+          icon: 'question',
+          showCancelButton: true,
+          confirmButtonText: 'Yes, post it!',
+          customClass: {
+            confirmButton: 'btn btn-primary',
+            cancelButton: 'btn btn-outline-danger ml-1',
+          },
+          buttonsStyling: false,
+        }).then(result => {
+          if (result.value) {
+            this.$store.dispatch('qa/postQuestion')
+          }
+        })
+      } else {
+        this.$toast({
+          component: ToastificationContentVue,
+          position: 'top-right',
+          props: {
+            title: `Content is required!`,
+            icon: 'CoffeeIcon',
+            variant: 'danger',
+          },
+        })
+      }
     },
     fileUpload: function(event) {
       var input = event.target;

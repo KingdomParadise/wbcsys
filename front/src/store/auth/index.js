@@ -14,7 +14,7 @@ export default {
   namespaced: true,
   state: {
     current_user: null,
-    token: Cookies.get('token'),
+    token: localStorage.getItem('token'),
     logged: false,
     newUser: {
       avatar_url: '',
@@ -60,7 +60,6 @@ export default {
     },
 
     [types.SET_NEW_USER] (state) {
-      console.log('setnewuser')
       state.newUser = {
         avatar_url: '',
         employee_name: '',
@@ -79,13 +78,12 @@ export default {
       }
     }
   },
+  
   actions: {
-    async getUser ({ commit, state }) {
+    async retrieveUser ({ commit, state }) {
       try {
-        const { data } = await axios.get(apiBaseUrl + 'auth/get_user', {headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}})
-        console.log(data)
+        const { data } = await axios.get(apiBaseUrl + 'auth/retrieve_user', {headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}})
         if (data.success) {
-          console.log(data.msg.token)
           commit(types.SET_CURRENT_USER, { user: data.msg.user })
         } else {
           commit(types.LOGOUT)
@@ -98,13 +96,12 @@ export default {
     async logout ({ commit }) {
       try {
         const { data } = await axios.post(apiBaseUrl + 'auth/logout')
-        console.log(data)
       } catch (e) { 
       }
       commit(types.LOGOUT)
     },
 
-    async registerUser ({commit, state}, payload){
+    async registerUser ({commit, state}){
       try {
         let formData = new FormData()
         Object.keys(state.newUser).forEach(key => {
@@ -137,7 +134,6 @@ export default {
     },
 
     async loginUser ({commit}, payload){
-      console.log(payload)
       try {
         const res = await axios.post(apiBaseUrl + "auth/login", payload);
         if (res.data.success) {

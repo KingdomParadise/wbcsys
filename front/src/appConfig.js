@@ -1,5 +1,6 @@
 export default {
   apiBaseUrl: 'http://localhost:8000/api/',
+  serverUrl: 'http://localhost:8000/',
   
   BROADCAST_DRIVER: 'pusher',
   PUSHER_APP_ID: '1285305',

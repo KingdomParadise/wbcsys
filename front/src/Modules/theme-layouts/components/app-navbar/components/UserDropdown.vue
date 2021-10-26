@@ -22,7 +22,7 @@
         badge
         class="badge-minimal"
         badge-variant="success"
-        :src="'http://localhost:8000/' + current_user.avatar_url"
+        :src="appConfig.serverUrl + current_user.avatar_url"
       >
       </b-avatar>
       <b-avatar
@@ -78,6 +78,7 @@ import {
   BNavItemDropdown, BDropdownItem, BDropdownDivider, BAvatar,
 } from 'bootstrap-vue'
 import { mapGetters } from 'vuex'
+import appConfig from '@/appConfig'
 
 export default {
   components: {
@@ -88,6 +89,7 @@ export default {
   },
   data() {
     return {
+      appConfig: appConfig
     }
   },
   computed: {
@@ -101,10 +103,10 @@ export default {
     },
   },
   mounted() {
-    this.$store.dispatch('auth/getUser')
-    this.$store.dispatch('common/getDepartments')
-    this.$store.dispatch('common/getRoles')
-    this.$store.dispatch('common/getTags')
+    this.$store.dispatch('auth/retrieveUser')
+    this.$store.dispatch('common/retrieveDepartments')
+    this.$store.dispatch('common/retrieveRoles')
+    this.$store.dispatch('common/retrieveTags')
   }
 }
 </script>

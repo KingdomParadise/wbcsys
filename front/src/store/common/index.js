@@ -28,10 +28,9 @@ export default {
     }
   },
   actions: {
-    async getDepartments ({commit, state}) {
+    async retrieveDepartments ({commit, state}) {
       try {
-        const {data} = await axios.get(apiBaseUrl + 'departments', {headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}})
-        console.log(data)
+        const {data} = await axios.get(apiBaseUrl + 'retrieve_departments', {headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}})
         if (data.success) {
           commit(types.SET_DEPARTMENTS, {departments: data.msg.departments})
         } else {
@@ -42,10 +41,9 @@ export default {
       }
     },
     
-    async getRoles ({commit, state}) {
+    async retrieveRoles ({commit, state}) {
       try {
-        const {data} = await axios.get(apiBaseUrl + 'roles', {headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}})
-        console.log(data)
+        const {data} = await axios.get(apiBaseUrl + 'retrieve_roles', {headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}})
         if (data.success) {
           commit(types.SET_ROLES, {roles: data.msg.roles})
         } else {
@@ -56,10 +54,9 @@ export default {
       }
     },
     
-    async getTags ({commit, state}) {
+    async retrieveTags ({commit, state}) {
       try {
-        const {data} = await axios.get(apiBaseUrl + 'tags', {headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}})
-        console.log(data)
+        const {data} = await axios.get(apiBaseUrl + 'retrieve_tags', {headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}})
         if (data.success) {
           commit(types.SET_TAGS, {tags: data.msg.tags})
         } else {

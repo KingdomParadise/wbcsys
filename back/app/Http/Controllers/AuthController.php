@@ -128,7 +128,7 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function userProfile() {
+    public function retrieveUser() {
         $user = User::with('departmentMaster')->where('id', auth()->user()->id)->where('del_flag', '0')->first();
         return response()->json([
             'msg' => [
@@ -139,7 +139,7 @@ class AuthController extends Controller
         ], 200);
     }
 
-    public function getAuth(Request $request) {
+    public function retrieveAuth(Request $request) {
         $channel=$request->channel_name;
         $socketId = $request->socket_id;
         $pusher = new Pusher(config('broadcasting.connections.pusher.key'), config('broadcasting.connections.pusher.secret'), config('broadcasting.connections.pusher.app_id'));

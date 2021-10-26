@@ -26,22 +26,25 @@ Route::middleware(['cors'])->group(function(){
         'middleware' => 'jwt.verify',
     ], function ($router) {
         
-        Route::get('/departments', 'App\Http\Controllers\DepartmentMasterController@index');
-        Route::get('/tags', 'App\Http\Controllers\TagMasterController@index');
-        Route::get('/roles', 'App\Http\Controllers\RoleMasterController@index');
+        Route::get('/retrieve_departments', 'App\Http\Controllers\DepartmentMasterController@index');
+        Route::get('/retrieve_tags', 'App\Http\Controllers\TagMasterController@index');
+        Route::get('/retrieve_roles', 'App\Http\Controllers\RoleMasterController@index');
         Route::group([
             'prefix' => 'auth'
         ], function($router) {
             Route::post('/logout', 'App\Http\Controllers\AuthController@logout');
             Route::post('/refresh', 'App\Http\Controllers\AuthController@refresh');
-            Route::get('/get_user', 'App\Http\Controllers\AuthController@userProfile');
-            Route::post('/get_auth', 'App\Http\Controllers\AuthController@getAuth');
+            Route::get('/retrieve_user', 'App\Http\Controllers\AuthController@retrieveUser');
+            Route::post('/retrieve_auth', 'App\Http\Controllers\AuthController@retrieveAuth');
         });
 
         Route::group([
             'prefix' => 'qa'
         ], function($router) {
+            Route::post('/retrieve_qa_group', 'App\Http\Controllers\QAController@retrieveQAGroup');
             Route::post('/post_question', 'App\Http\Controllers\QAController@postQuestion');
+            Route::post('/post_answer', 'App\Http\Controllers\QAController@postAnswer');
+            Route::post('/follow', 'App\Http\Controllers\QAController@follow');
         });
     });
 });

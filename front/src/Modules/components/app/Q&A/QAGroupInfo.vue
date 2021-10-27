@@ -19,7 +19,8 @@
             <div class="qa_group_content">
               <div class="d-flex justify-content-between">
                 <div class="d-flex flex-column align-items-start">
-                  <span class="user fav_color">{{qaGroup.user.employee_name}}</span>
+                  <span v-if="qaGroup.anonymous" class="user fav_color">社員</span>
+                  <span v-if="!qaGroup.anonymous" class="user fav_color">{{qaGroup.user.employee_name}}</span>
                   <p style="white-space: pre-line">{{qaGroup.content}}</p>
                 </div>
                 <div class="right_header">

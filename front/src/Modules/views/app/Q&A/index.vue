@@ -19,13 +19,7 @@ export default defineComponent({
     
   },
   mounted() {
-
-    console.log(Echo)
-    Echo.private('question.created').listen('QuestionCreated',(payload) => {
-      console.log('QuestionCreated', payload)
-    }).listen('MessageCreated',(payload) => {
-      console.log('MessageCreated', payload)
-    })
+    
   },
   destroyed() {
     Echo.leave('question.created')

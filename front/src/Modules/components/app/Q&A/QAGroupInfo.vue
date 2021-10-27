@@ -38,7 +38,7 @@
                   <b-badge v-if="qaGroup.tag_relation" class="ml-2" variant="primary">
                     {{common_states.tags.filter(item => item.id == qaGroup.tag_relation.tag_id)[0].tag_name}}
                   </b-badge>
-                  <a :href="appConfig.serverUrl + qaGroup.attachment" download>
+                  <a :href="appConfig.serverUrl + qaGroup.attachment" target="blank" download>
                     <feather-icon 
                       icon="DownloadIcon"
                       :class="['cursor-pointer', 'ml-2', 'text-info']"
@@ -348,6 +348,9 @@ export default defineComponent({
       }
     })
 
+  },
+  destroyed() {
+    Echo.leave('qa.notification')
   }
 })
 </script>

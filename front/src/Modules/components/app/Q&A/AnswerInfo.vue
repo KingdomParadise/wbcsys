@@ -27,7 +27,7 @@
           <span class="mr-2">スコア ( {{answer.score}} )</span>
           <span class="mr-2" v-if="isBest()">💛ベストアンサー</span>
           <span class="ml-auto"></span>
-          <a :href="appConfig.serverUrl + answer.attachment" download>
+          <a :href="appConfig.serverUrl + answer.attachment" target="blank" download>
             <feather-icon 
               icon="DownloadIcon"
               :class="['cursor-pointer', 'ml-2', 'text-info']"

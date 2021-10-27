@@ -9,10 +9,12 @@
             </b-card-title>
           </b-card-header >
           <b-card-body class="mt-2">
-            <div class="d-flex mb-2">
-              <b-img v-if="!newUser.preview" :src="require('@/assets/images/avatars/default.png')" rounded class="mr-2" width="300" height="300" />
-              <b-img v-if="newUser.preview" :src="newUser.preview" rounded class="mr-2" width="300" height="300" />
-              <div class="d-flex align-items-end mt-75 ms-1">
+            <b-row class="mb-2">
+              <b-col sm="6" md="3">
+                <b-img v-if="!newUser.preview" :src="require('@/assets/images/avatars/default.png')" rounded class="w-100" />
+                <b-img v-if="newUser.preview" :src="newUser.preview" rounded class="w-100" />
+              </b-col>
+              <b-col sm="6" md="3" class="d-flex align-items-end mt-75 ms-1">
                 <div>
                   <label for="user-avatar-upload" class="btn btn-sm btn-primary mb-75 mr-1">アップロード</label>
                   <input type="file" @change="previewImage" id="user-avatar-upload" hidden accept="image/*" />
@@ -26,13 +28,13 @@
                   </b-button>
                   <p class="mb-0">許可されるファイルタイプ: png, jpg, jpeg.</p>
                 </div>
-              </div>
-            </div>
+              </b-col>
+            </b-row>
             <b-form @submit.prevent>
               <b-row>
                 <b-col md="6">
                   <b-form-group
-                    label="社員ID（ログインID）"
+                    label="社員ID"
                     label-for="employee_id"
                   >
                     <b-form-input
@@ -56,12 +58,12 @@
                 </b-col>
                 <b-col md="6">
                   <b-form-group
-                    label="メールアドレス"
+                    label="ログインID"
                     label-for="login_id"
                   >
                     <b-form-input
                       id="login_id"
-                      placeholder="メールアドレス"
+                      placeholder="ログインID"
                       v-model="newUser.login_id"
                     />
                   </b-form-group>
@@ -130,13 +132,12 @@
                 <b-col md="6">
                   <b-form-group
                     label="役職"
-                    label-for="director"
+                    label-for="role_id"
                   >
                     <b-form-select
-                      id="director"
+                      id="role_id"
                       v-model="newUser.role_id"
                       placeholder="所属部署"
-                      required
                     >
                       <option
                         v-for="role in common_states.roles"
@@ -240,11 +241,14 @@ import {
   BForm, 
   BFormTextarea,
   BImg,
-  BFormDatepicker
+  BFormDatepicker,
+  BFormInvalidFeedback
 } from 'bootstrap-vue'
 import vSelect from 'vue-select'
 import Ripple from 'vue-ripple-directive'
 import { mapGetters } from 'vuex'
+import { ValidationProvider, ValidationObserver } from 'vee-validate'
+import ToastificationContentVue from '@/@core/components/toastification/ToastificationContent.vue'
 
 export default {
   components: {
@@ -262,8 +266,13 @@ export default {
     BForm,
     BImg,
     BFormDatepicker,
+    vSelect,
+    BFormInvalidFeedback,
 
-    vSelect
+    //Form Validation
+    ValidationObserver,
+    ValidationProvider
+
   },
   directives: {
     Ripple
@@ -275,8 +284,41 @@ export default {
     }),
   },
   methods: {
-    register() {
-      this.$store.dispatch('auth/registerUser')
+    validateUserRegister(user) {
+      var validateMsg = ''
+      var returnVal = false
+      if (user.employee_id == '') {
+        validateMsg = '従業員IDフィールドに入力する必要があります。'
+      } else if (user.login_id == '') {
+        validateMsg = 'ログインIDフィールドに入力する必要があります。'
+      } else if (user.employee_name == '') {
+        validateMsg = '従業員名フィールドに入力する必要があります。'
+      } else if (user.password == '') {
+        validateMsg = 'パスワードフィールドに入力する必要があります。'
+      } else if (user.role_id == null) {
+        validateMsg = 'ロールIDフィールドに入力する必要があります。'
+      } else {
+        returnVal = true
+      }
+      return {
+        msg: validateMsg,
+        validate: returnVal
+      }
+    },
+    register: function() {
+      if (this.validateUserRegister(this.newUser).validate == true) {
+        this.$store.dispatch('auth/registerUser')
+      } else {
+        this.$toast({
+          component: ToastificationContentVue,
+          position: 'top-right',
+          props: {
+            title: this.validateUserRegister(this.newUser).msg,
+            icon: 'CoffeeIcon',
+            variant: 'danger',
+          },
+        })
+      }
     },
     previewImage: function(event) {
       var input = event.target;
@@ -295,25 +337,7 @@ export default {
     }
   },
   setup() {
-    const roleOptions = [
-      {
-        value: 0,
-        text: 'admin'
-      },
-      {
-        value: 1,
-        text: 'user'
-      },
-      {
-        value: 2,
-        text: 'guest'
-      }
-    ]
-    
-    return {
-      roleOptions,
-    }
-  }
+  },
 }
 </script>
 

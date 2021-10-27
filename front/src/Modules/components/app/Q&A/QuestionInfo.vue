@@ -6,8 +6,10 @@
           <b-col sm="6">
             <b-input-group class="input-group-merge">
               <b-form-input placeholder="検索" v-model="searchVal"></b-form-input>
-              <b-input-group-append is-text>
-                <feather-icon icon="SearchIcon"></feather-icon>
+              <b-input-group-append>
+                <b-button variant="outline-primary" @click="search">
+                  <feather-icon icon="SearchIcon"></feather-icon>
+                </b-button>
               </b-input-group-append>
             </b-input-group>
           </b-col>
@@ -129,13 +131,16 @@ export default defineComponent({
     onUploadBtnClick() {
       this.$refs.uploader.click()
     },
+
+    //post question
     postQuestion() {
       if (this.newQuestion.content !== '') {
         this.$swal({
-          title: 'Are you sure?',
+          title: '本当に問題を提示しますか？',
           icon: 'question',
           showCancelButton: true,
-          confirmButtonText: 'Yes, post it!',
+          confirmButtonText: 'はい、そうです。',
+          cancelButtonText: 'いいえ。',
           customClass: {
             confirmButton: 'btn btn-primary',
             cancelButton: 'btn btn-outline-danger ml-1',
@@ -151,16 +156,23 @@ export default defineComponent({
           component: ToastificationContentVue,
           position: 'top-right',
           props: {
-            title: `Content is required!`,
+            title: `内容を入力してください。`,
             icon: 'CoffeeIcon',
             variant: 'danger',
           },
         })
       }
     },
+
+    // set new question attachment
     fileUpload: function(event) {
       var input = event.target;
       this.newQuestion.attachment=input.files[0];
+    },
+
+    //search qa group
+    search: function() {
+      this.$store.dispatch('qa/searchQAGroup')
     }
   },
 })

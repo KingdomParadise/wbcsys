@@ -54,7 +54,6 @@ class AuthController extends Controller
             'employee_name' => 'required|string|between:1,100',
             'employee_id' => 'required|string|between:1,100|unique:users',
             'login_id' => 'required|string|max:100|unique:users',
-            'department_id' => 'required'
         ]);
 
         if($validator->fails()) {

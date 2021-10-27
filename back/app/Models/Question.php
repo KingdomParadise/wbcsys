@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use App\Models\Answer;
 use App\Models\QAFollow;
+use App\Models\QATagRelation;
 
 class Question extends Model
 {
@@ -26,5 +27,13 @@ class Question extends Model
 
     public function qafollow() {
         return $this->hasMany(QAFollow::class);
+    }
+
+    public function tagRelation() {
+        return $this->hasOne(QATagRelation::class);
+    }
+
+    public function scopeContentFilter($query, $param) {
+        return $query->where("content", "LIKE", "%{$param}%");
     }
 }

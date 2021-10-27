@@ -4,7 +4,6 @@ import axios from 'axios'
 import * as types from '../mutation-types'
 import Vue from 'vue'
 import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
-import store from '@/store'
 
 const { apiBaseUrl } = appConfig
 
@@ -19,20 +18,22 @@ export default {
     },
     qaGroups: [],
     qaSearchVal: '',
-    answers: []
+    answers: [],
+    totalCount: 0
   },
   getters: {
     newQuestion: state => state.newQuestion,
     qaGroups: state => state.qaGroups,
     qaSearchVal: state => state.qaSearchVal,
-    answers: state => state.answers
+    answers: state => state.answers,
+    totalCount: state => state.totalCount
   },
   mutations: {
     [types.SET_NEW_QUESTION] (state) {
       state.newQuestion = {
         content: '',
         anonymous: false,
-        tag_id: 0,
+        tag_id: null,
         attachment: null
       }
     },
@@ -54,18 +55,50 @@ export default {
     },
     [types.SET_QA_SEARCHVAL] (state, {searchVal}) {
       state.qaSearchVal = searchVal
+    },
+    [types.TOTAL_COUNT] (state, {totalCount}) {
+      state.totalCount = totalCount
     }
   },
   actions: {
     async retrieveQAGroup ({commit, state}) {
+      console.log('retireve qa group')
       try {
         const { data } = await axios.post(apiBaseUrl + 'qa/retrieve_qa_group', { 
           currentCount: state.qaGroups.length,
-          search: state.qaSearchVal
+          search: state.qaSearchVal.split(' ').filter(item => item != '')
         }, {headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}})
+        if (data.success) {
+          var newArray = []
+          state.qaGroups.forEach(item => {
+            newArray.push(item)
+          })
+          data.msg.qaGroups.forEach(item => {
+            newArray.push(item)
+          })
+          commit(types.SET_QA_GROUP, {qaGroups: newArray})
+          commit(types.INIT_ANSWERS)
+          commit(types.TOTAL_COUNT, {totalCount: data.msg.totalCount})
+        } else {
+
+        }
+      } catch (error) {
+        commit('auth/'+ types.LOGOUT)
+      }
+    },
+
+    async searchQAGroup ({commit, state}) {
+      try {
+        const { data } = await axios.post(apiBaseUrl + 'qa/retrieve_qa_group', { 
+          currentCount: 0,
+          search: state.qaSearchVal.split(' ').filter(item => item != '')
+        }, {headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}})
+        console.log(data)
+        console.log(state.qaGroups.length)
         if (data.success) {
           commit(types.SET_QA_GROUP, {qaGroups: data.msg.qaGroups})
           commit(types.INIT_ANSWERS)
+          commit(types.TOTAL_COUNT, {totalCount: data.msg.totalCount})
         } else {
 
         }
@@ -99,21 +132,28 @@ export default {
               title: `成功`,
               icon: 'CoffeeIcon',
               variant: 'success',
-              text: `ユーザー登録は成功です。`,
+              text: `首尾よく質問をしました。`,
             },
           })
-          var newQuestion = [data.msg.question]
-          state.qaGroups.forEach(item => {
-            newQuestion.push(item)
+          var searchGroup = state.qaSearchVal.split(' ').filter(item => item != '')
+
+          var posibilityGroup = searchGroup.map(sItem => {
+            return data.msg.question.content.indexOf(sItem) > -1
           })
-          state.answers[data.msg.question.id] = {content: '', attachment:null}
-          commit(types.SET_QA_GROUP,{ qaGroups: newQuestion })
+  
+          if (posibilityGroup.reduce((sum, next) => sum && next, true)) {
+            var newQuestion = [data.msg.question]
+            state.qaGroups.forEach(item => {
+              newQuestion.push(item)
+            })
+            state.answers[data.msg.question.id] = {content: '', attachment:null}
+            commit(types.SET_QA_GROUP,{ qaGroups: newQuestion })
+          }
         } else {
 
         }
       } catch (error) {
         commit('auth/'+ types.LOGOUT)
-
       }
     },
 
@@ -142,7 +182,7 @@ export default {
               title: `成功`,
               icon: 'CoffeeIcon',
               variant: 'success',
-              text: `ユーザー登録は成功です。`,
+              text: `成功した答えをしました。`,
             },
           })
           var question_id = data.msg.answer.question_id
@@ -156,7 +196,6 @@ export default {
         }
       } catch (error) {
         commit('auth/'+ types.LOGOUT)
-
       }
     },
 

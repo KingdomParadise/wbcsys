@@ -56,7 +56,6 @@
                 trim
                 placeholder="あみ"
               />
-
               <b-form-invalid-feedback>
                 この項目は必須です。
               </b-form-invalid-feedback>

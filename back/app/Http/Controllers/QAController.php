@@ -16,14 +16,15 @@ class QAController extends Controller
 
     function retrieveQAGroup(Request $request) {
         $current_count = $request->currentCount;
-        $questions = Question::with('user')
+        $query = Question::with('user')
                         ->with('answer')
                         ->with('answer.user')
+                        ->with('tagRelation')
                         ->where('del_flag', '0')
-                        ->orderBy('updated_at', 'desc')
-                        ->skip($current_count)
-                        ->take(5)
-                        ->get();
+                        ->orderBy('updated_at', 'desc');
+
+        $questions = $this->filter($query, $request->search)->skip($current_count)->take(5)->get();
+
         foreach ($questions as $key => $question) {
             $question->score = QAFollow::where('follow_id', $question->id)->where('category', 1)->sum('score');
             $question->showAll = false;
@@ -31,13 +32,22 @@ class QAController extends Controller
                 $answer->score = QAFollow::where('follow_id', $answer->id)->where('category', 2)->sum('score');
             }
         }
+        
         return response()->json([
             'success' => true,
             'msg' => [
                 'qaGroups' => $questions,
-                'totalcount' => Question::where('del_flag', '0')->count()
+                'totalCount' => $this->filter(Question::where('del_flag', '0'), $request->search)->count()
             ]
         ]);
+    }
+
+    function filter($query, $filters) {
+        $temp = $query;
+        foreach ($filters as $filter) {
+            $temp = $temp->contentFilter($filter);
+        }
+        return $temp;
     }
 
     function postQuestion(Request $request) {
@@ -70,7 +80,7 @@ class QAController extends Controller
             $qatag->save();
         }
 
-        $notiQuestion = Question::with('user')->with('answer')->with('answer.user')->where('id', $question->id)->where('del_flag', '0')->first();
+        $notiQuestion = Question::with('user')->with('answer')->with('answer.user')->with('tagRelation')->where('id', $question->id)->where('del_flag', '0')->first();
         $notiQuestion->score = QAFollow::where('follow_id', $question->id)->where('category', 1)->sum('score');
         broadcast(new QACreated([
             'question' => $notiQuestion,
@@ -155,7 +165,7 @@ class QAController extends Controller
                         'msg' => [
                             'follow' => $follow,
                             'question_id' => $request->question_id,
-                            'message' => 'This is follewed already.'
+                            'message' => 'すでにお勧めです。'
                         ]
                     ], 200);
                 }
@@ -167,7 +177,7 @@ class QAController extends Controller
                         'msg' => [
                             'follow' => $follow,
                             'question_id' => $request->question_id,
-                            'message' => 'This is unfollewed already.'
+                            'message' => 'すでに反対しています。'
                         ]
                     ], 200);
                 }

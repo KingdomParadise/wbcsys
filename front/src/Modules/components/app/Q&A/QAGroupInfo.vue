@@ -2,10 +2,10 @@
   <section id="qa-groups">
     <b-card no-body>
       <b-card-body>
-        <p v-if="filterQAGroup().length === 0" class="text-center mb-0">no questions</p>
+        <p v-if="qaGroups.length === 0" class="text-center mb-0">no questions</p>
         <app-collapse>
           <app-collapse-item 
-            v-for="(qaGroup, qaGroupIdx) in filterQAGroup()"
+            v-for="(qaGroup, qaGroupIdx) in qaGroups"
             v-bind:key="qaGroupIdx + '-' + qaGroup.id + '-qaGroup'"
             v-bind:title="qaGroup.created_at | titleTimePipe"
             class="qa-group"
@@ -33,11 +33,23 @@
                   <span v-if="qaGroup.answer.length > 5" :class="['cursor-pointer']" @click="showAll(qaGroup.id)">すべてコメントを見る ( {{qaGroup.answer.length}} )</span>
                 </div>
                 <div class="d-flex col-md-4 align-items-center">
-                  <feather-icon 
+                  <span class="ml-auto"></span>
+                  <b-badge v-if="qaGroup.tag_relation" class="ml-2" variant="primary">
+                    {{common_states.tags.filter(item => item.id == qaGroup.tag_relation.tag_id)[0].tag_name}}
+                  </b-badge>
+                  <a :href="appConfig.serverUrl + qaGroup.attachment" download>
+                    <feather-icon 
+                      icon="DownloadIcon"
+                      :class="['cursor-pointer', 'ml-2', 'text-info']"
+                      size="18"
+                      v-if="qaGroup.attachment"
+                    ></feather-icon>  
+                  </a>
+                  <!-- <feather-icon 
                     icon="StarIcon"
-                    :class="['cursor-pointer', 'ml-auto', 'text-warning']"
+                    :class="['cursor-pointer', 'ml-2', 'text-warning']"
                     size="18"
-                  ></feather-icon>
+                  ></feather-icon> -->
                   <feather-icon 
                     icon="ThumbsUpIcon"
                     :class="['cursor-pointer', 'ml-2', 'text-success']"
@@ -88,8 +100,9 @@
             <b-button
               variant="primary"
               @click="loadMore"
+              v-if="totalCount > 5 && qaGroups.length < totalCount"
             >
-              Load More
+              もっと見る
             </b-button>
           </div>
         </app-collapse>
@@ -110,7 +123,8 @@ import {
   BRow,
   BCol,
   BButton,
-  BFormTextarea
+  BFormTextarea,
+  BBadge
 } from 'bootstrap-vue'
 
 import AppCollapse from '@core/components/app-collapse/AppCollapse.vue'
@@ -120,6 +134,7 @@ import { mapGetters } from 'vuex'
 import moment from 'moment'
 import ToastificationContentVue from '@/@core/components/toastification/ToastificationContent.vue'
 import appConfig from '@/appConfig'
+import axios from 'axios'
 
 export default defineComponent({
   components: {
@@ -135,13 +150,16 @@ export default defineComponent({
     BButton,
     AppCollapse,
     AppCollapseItem,
-    AnswerInfo
+    AnswerInfo,
+    BBadge
   },
   computed: {
     ...mapGetters({
       qaGroups: 'qa/qaGroups',
       answers: 'qa/answers',
-      searchVal: 'qa/qaSearchVal'
+      searchVal: 'qa/qaSearchVal',
+      totalCount: 'qa/totalCount',
+      common_states: 'common/common_states',
     }),
   },
   setup() {
@@ -154,9 +172,6 @@ export default defineComponent({
     }
   },
   methods: {
-    onUploadBtnClick() {
-      this.$refs.uploader.click()
-    },
     attachmentFile(id) {
       this.$refs.attachment[id].click()
     },
@@ -198,7 +213,8 @@ export default defineComponent({
           title: 'Are you sure?',
           icon: 'question',
           showCancelButton: true,
-          confirmButtonText: 'Yes, answer for this question!',
+          confirmButtonText: 'はい、そうです。',
+          cancelButtonText: 'いいえ。',
           customClass: {
             confirmButton: 'btn btn-primary',
             cancelButton: 'btn btn-outline-danger ml-1',
@@ -217,7 +233,7 @@ export default defineComponent({
           component: ToastificationContentVue,
           position: 'top-right',
           props: {
-            title: `Answer Info is required!`,
+            title: `内容を入力してください。`,
             icon: 'CoffeeIcon',
             variant: 'danger',
           },
@@ -249,23 +265,19 @@ export default defineComponent({
       })
     },
 
-    //handle window scroll
-    handleScroll: function(event) {
-      if (window.pageYOffset + window.innerHeight == document.body.scrollHeight) {
-        console.log('load more')
-      }
-    },
-
     //load more
     loadMore: function() {
-      console.log('lo')
-    }
+      this.$store.dispatch('qa/retrieveQAGroup')
+    },
 
   },
   filters: {
+    // qa group title time pipe
     titleTimePipe: function(value) {
       return moment(value).format('YYYY/MM/DD h:mm:ss')
     },
+
+    // question time diff from now
     agoTimePipe: function(value) {
       var nowTime = moment(new Date())
       var created_at = moment(value)
@@ -278,10 +290,12 @@ export default defineComponent({
     }
   },
   mounted() {
-    this.$store.dispatch('qa/retrieveQAGroup')
+    // retrieve init qa group data
+    this.$store.dispatch('qa/searchQAGroup')
     
     //socket listen qa notification
     Echo.private('qa.notification').listen('QACreated',(payload) => {
+      console.log(payload)
       var user = payload.qaNotification.user
       if (payload.qaNotification.category == 1) {
 
@@ -289,25 +303,35 @@ export default defineComponent({
           component: ToastificationContentVue,
           position: 'top-right',
           props: {
-            title: `${user.employee_name} posted the new Question`,
+            title: `「${user.employee_name}」 が質問をしました。`,
             icon: 'CoffeeIcon',
             variant: 'success',
           },
         })
 
-        var newQuestion = [payload.qaNotification.question]
-        this.qaGroups.forEach(item => {
-          newQuestion.push(item)
+        var searchGroup = this.searchVal.split(' ').filter(item => item != '')
+
+        var posibilityGroup = searchGroup.map(sItem => {
+          return payload.qaNotification.question.content.indexOf(sItem) > -1
         })
-        this.$store.commit('qa/SET_QA_GROUP',{ qaGroups: newQuestion })
-        this.answers[payload.qaNotification.question.id] = {content: '', attachment:null}
+
+        if (posibilityGroup.reduce((sum, next) => sum && next, true)) {
+          console.log('filtered')
+          var newQuestion = [payload.qaNotification.question]
+          this.qaGroups.forEach(item => {
+            newQuestion.push(item)
+          })
+          this.$store.commit('qa/SET_QA_GROUP',{ qaGroups: newQuestion })
+          this.answers[payload.qaNotification.question.id] = {content: '', attachment:null}
+        }
+
       } else if (payload.qaNotification.category == 2) {
 
         this.$toast({
           component: ToastificationContentVue,
           position: 'top-right',
           props: {
-            title: `${user.employee_name} answered.`,
+            title: `「${user.employee_name}」 が答えた。`,
             icon: 'CoffeeIcon',
             variant: 'success',
           },
@@ -323,8 +347,6 @@ export default defineComponent({
       }
     })
 
-    //scroll
-    window.addEventListener('scroll', this.handleScroll);
   }
 })
 </script>

@@ -126,7 +126,29 @@ export default {
             },
           })
         } else {
-
+          var error = JSON.parse(data.error[0])
+          if (error.employee_id) {
+            Vue.$toast({
+              component: ToastificationContent,
+              position: 'top-right',
+              props: {
+                title: 'The user with same employee_id is exsited already!',
+                icon: 'CoffeeIcon',
+                variant: 'warning',
+              },
+            })
+          }
+          if (error.login_id) {
+            Vue.$toast({
+              component: ToastificationContent,
+              position: 'top-right',
+              props: {
+                title: 'The user with same login_id is exsited already!',
+                icon: 'CoffeeIcon',
+                variant: 'warning',
+              },
+            })
+          }
         }
       } catch (error) {
         commit(types.LOGOUT)

@@ -26,11 +26,20 @@
         <div class="d-flex align-items-center">
           <span class="mr-2">スコア ( {{answer.score}} )</span>
           <span class="mr-2" v-if="isBest()">💛ベストアンサー</span>
-          <feather-icon 
+          <span class="ml-auto"></span>
+          <a :href="appConfig.serverUrl + answer.attachment" download>
+            <feather-icon 
+              icon="DownloadIcon"
+              :class="['cursor-pointer', 'ml-2', 'text-info']"
+              size="18"
+              v-if="answer.attachment"
+            ></feather-icon>  
+          </a>
+          <!-- <feather-icon 
             icon="StarIcon"
-            :class="['cursor-pointer', 'ml-auto', 'text-warning']"
+            :class="['cursor-pointer', 'ml-2', 'text-warning']"
             size="18"
-          ></feather-icon>
+          ></feather-icon> -->
           <feather-icon 
             icon="ThumbsUpIcon"
             :class="['cursor-pointer', 'ml-2', 'text-success']"
@@ -87,6 +96,8 @@ export default defineComponent({
     },
   },
   methods: {
+
+    // detect the best answer
     isBest() {
       var qaGroup = this.qaGroups.filter(item => item.id == this.question_id)[0]
       if (parseInt(this.answer.score) == Math.max.apply(Math, qaGroup.answer.map(item => parseInt(item.score)))) {
@@ -95,6 +106,8 @@ export default defineComponent({
         return false
       }
     },
+
+    // like and dislike the answer
     follow: function(follow_id, type, category) {
       this.$swal({
         title: 'Are you sure?',
@@ -116,7 +129,7 @@ export default defineComponent({
           })
         }
       })
-    }
+    },
   }
 })
 </script>
